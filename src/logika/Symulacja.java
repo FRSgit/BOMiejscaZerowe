@@ -10,9 +10,9 @@ public class Symulacja {
 
     public void wlaczMenu() {
         int liczbaOsobnikow = 1000;
-        double min = -100;
-        double max = 100;
-        double epsilon = 0.01;
+        double min = -10000;
+        double max = 10000;
+        double epsilon = 0.1;
         int liczbaArgumentow = 3;
         int liczbaPokolen = 100;
 
@@ -20,6 +20,7 @@ public class Symulacja {
         LinkedList<Double> x = new LinkedList<>();
         LinkedList<Double> y = new LinkedList<>();
         LinkedList<Double> z = new LinkedList<>();
+
         x.add(new Double(-5));
         x.add(new Double(12));
         x.add(new Double(-3.29));
@@ -31,7 +32,12 @@ public class Symulacja {
         z.add(new Double(823.2));
         LinkedList<LinkedList<Double>>  fnc = new LinkedList<>();
         fnc.add(x);
+        fnc.add(y);
+        fnc.add(z);
         FunkcjaWieluZmiennych fncwz = new FunkcjaWieluZmiennych(fnc);
+
+        //fncwz = wczytajFunkcjeOdUzytkownika();
+
         pop.funkcjaWieluZmiennych = fncwz;
 
         Osobnik osId = pop.szukajOsobnikaIdealnego();

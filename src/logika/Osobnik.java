@@ -24,7 +24,7 @@ public class Osobnik implements Comparable<Osobnik>{
     public int szansaMutacji;
 
     private final Double standardowyWspolczynnikMutacji = 0.2;
-    private final int standardowaSzansaMutacji = 90;
+    private final int standardowaSzansaMutacji = 80;
 
     public Osobnik() {
         inicjalizuj(new LinkedList<>(), standardowyWspolczynnikMutacji, standardowaSzansaMutacji);
@@ -35,7 +35,7 @@ public class Osobnik implements Comparable<Osobnik>{
     }
 
     public Osobnik(LinkedList<Double> argumenty, Double wspolczynnikMutowania, int szansaMutacji) {
-        this.inicjalizuj(argumenty, wspolczynnikMutowania, szansaMutacji);
+        inicjalizuj(argumenty, wspolczynnikMutowania, szansaMutacji);
     }
 
     private void inicjalizuj(LinkedList<Double> argumenty, Double wspolczynnikMutowania, int szansaMutacji) {
@@ -91,7 +91,7 @@ public class Osobnik implements Comparable<Osobnik>{
     }
 
     public void wypisz() {
-        System.out.print("Wartosc: " + wartosc + ", argumenty: ");
+        System.out.print("wartosc: " + wartosc + ", argumenty: ");
         for (Double argument : argumenty) {
             System.out.print(argument);
             if (!argumenty.getLast().equals(argument)) {

@@ -7,10 +7,42 @@ import java.util.Scanner;
  * Created by Kamil on 2015-04-20.
  */
 public class Symulacja {
+
+    public void wlaczMenu() {
+        int liczbaOsobnikow = 1000;
+        double min = -100;
+        double max = 100;
+        double epsilon = 0.01;
+        int liczbaArgumentow = 3;
+        int liczbaPokolen = 100;
+
+        Populacja pop = new Populacja(liczbaPokolen, epsilon, liczbaOsobnikow, liczbaArgumentow, min, max);
+        LinkedList<Double> x = new LinkedList<>();
+        LinkedList<Double> y = new LinkedList<>();
+        LinkedList<Double> z = new LinkedList<>();
+        x.add(new Double(-5));
+        x.add(new Double(12));
+        x.add(new Double(-3.29));
+        y.add(new Double(7.20));
+        y.add(new Double(-103.52));
+        z.add(new Double(10242.3));
+        z.add(new Double(742.283));
+        z.add(new Double(-2112.44));
+        z.add(new Double(823.2));
+        LinkedList<LinkedList<Double>>  fnc = new LinkedList<>();
+        fnc.add(x);
+        FunkcjaWieluZmiennych fncwz = new FunkcjaWieluZmiennych(fnc);
+        pop.funkcjaWieluZmiennych = fncwz;
+
+        Osobnik osId = pop.szukajOsobnikaIdealnego();
+        System.out.print("Znaleziony osobnik: ");
+        osId.wypisz();
+    }
+
     public FunkcjaWieluZmiennych wczytajFunkcjeOdUzytkownika() {
         LinkedList<LinkedList<Double>> funkcja = new LinkedList<LinkedList<Double>>();
         Scanner in = new Scanner(System.in);
-        System.out.print("\nPodaj ilosc zmiennych fukcji: ");
+        System.out.print("\nPodaj ilosc zmiennych funkcji: ");
         int iloscArgumentow = in.nextInt();
         for (int i = 0; i < iloscArgumentow; ++i) {
             LinkedList<Double> wspolczynniki = new LinkedList<Double>();
@@ -23,5 +55,17 @@ public class Symulacja {
             funkcja.add(wspolczynniki);
         }
         return new FunkcjaWieluZmiennych(funkcja);
+    }
+
+    public static void printList(LinkedList<Object> list) {
+        for (Object obj : list) {
+            System.out.println(obj);
+        }
+    }
+
+    public static void printOsobniks(LinkedList<Osobnik> list) {
+        for (Osobnik o : list) {
+            System.out.println(o.wartosc);
+        }
     }
 }

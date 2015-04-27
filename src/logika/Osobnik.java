@@ -24,7 +24,7 @@ public class Osobnik implements Comparable<Osobnik>{
     public int szansaMutacji;
 
     private final Double standardowyWspolczynnikMutacji = 0.2;
-    private final int standardowaSzansaMutacji = 80;
+    private final int standardowaSzansaMutacji = 10;
 
     public Osobnik() {
         inicjalizuj(new LinkedList<>(), standardowyWspolczynnikMutacji, standardowaSzansaMutacji);
@@ -64,12 +64,24 @@ public class Osobnik implements Comparable<Osobnik>{
 
     public Osobnik krzyzuj(Osobnik osobnik) {
         LinkedList<Double> argumentyDziecka = new LinkedList<>();
-        for (int i = 0; i < argumenty.size(); ++i) {
-            if (GeneratorLiczbLosowych.generujBoolean()) {
-                argumentyDziecka.add(this.argumenty.get(i));
-            } else {
-                argumentyDziecka.add(osobnik.argumenty.get(i));
-            }
+        for (int i = 0; i < argumenty.size(); ++i){
+        	String childGenome;
+        	String XGenome = Long.toBinaryString(Double.doubleToRawLongBits(this.argumenty.get(i)));
+        	String YGenome = Long.toBinaryString(Double.doubleToRawLongBits(osobnik.argumenty.get(i)));
+        	int shorterGenome = (YGenome.length()>XGenome.length())?XGenome.length():YGenome.length();
+        	double childArg = 0;
+        	do{
+        		childGenome = "";
+	        	for(int j = 0; j < shorterGenome; j++)
+	        		childGenome += (GeneratorLiczbLosowych.generujBoolean())?XGenome.charAt(j):YGenome.charAt(j);
+	    	    if(childGenome.length() == 64 && childGenome.charAt(0) == '1') {
+	                String negBinStr = childGenome.substring(1);
+	                childArg = -1 * Double.longBitsToDouble(Long.parseLong(negBinStr, 2));
+		        }else{
+		        	childArg = Double.longBitsToDouble(Long.parseLong(childGenome, 2));
+		        }
+        	}while(new Double(childArg).toString().indexOf('E')!=-1 && Integer.parseInt(new Double(childArg).toString().split("E")[1]) > 10);
+        	argumentyDziecka.add(childArg);
         }
         Osobnik dziecko = new Osobnik(argumentyDziecka);
         if (dziecko.czyMutowac()) {

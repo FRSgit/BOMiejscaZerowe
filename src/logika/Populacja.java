@@ -60,7 +60,10 @@ public class Populacja {
 		LinkedList<Osobnik> nowePokolenie = new LinkedList<Osobnik>();
 		for(int i = 0; i < listaOsobnikow.size(); i++){
 			for(int j = 0; j<1/szansaPrzezycia; j++){
-				Osobnik dziecko = listaOsobnikow.get(i).krzyzuj(listaOsobnikow.get(GeneratorLiczbLosowych.generujCalkowita(0, liczbaOsobnikow - 1)));
+				int secondParent = GeneratorLiczbLosowych.generujCalkowita(0, liczbaOsobnikow - 1);
+				while(secondParent == i)
+					secondParent = GeneratorLiczbLosowych.generujCalkowita(0, liczbaOsobnikow - 1);
+				Osobnik dziecko = listaOsobnikow.get(i).krzyzuj(listaOsobnikow.get(secondParent));
 				nowePokolenie.add(dziecko);
 			}
 		}

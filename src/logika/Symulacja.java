@@ -7,8 +7,35 @@ import java.util.Scanner;
  * Created by Kamil on 2015-04-20.
  */
 public class Symulacja {
+	private
+		int liczbaOsobnikow;
+	    double min;
+	    double max;
+	    double epsilon = 0.1;
+	    int liczbaArgumentow;
+	    int liczbaPokolen;
+	    Scanner scan;
+	    
+	private String getUserInput(String msg){
+		String result = null;
+		System.out.print(msg+"\n");
+		result = scan.next();
+		return result;
+	}
 
-    public void wlaczMenu() {
+	private void getVariables(){
+		scan = new Scanner(System.in);
+		System.out.print("Symulacja 1.05323c night build BO523212 rev. 3\n");
+		liczbaOsobnikow = Integer.parseInt(getUserInput("Podaj pocz¹tkow¹ liczbê osobników:"));
+		min = Double.parseDouble(getUserInput("Podaj doln¹ granice badanego przedzia³u:"));
+		max = Double.parseDouble(getUserInput("Podaj górn¹ granice badanego przedzia³u:"));
+		liczbaPokolen = Integer.parseInt(getUserInput("Podaj liczbê pokoleñ:"));
+		liczbaArgumentow = Integer.parseInt(getUserInput("Podaj liczbê zmiennych w funkcji:"));
+		scan.close();
+	}
+	
+    public void wlaczMenu(){
+    	//getVariables();
         int liczbaOsobnikow = 1000;
         double min = -10000;
         double max = 10000;

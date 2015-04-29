@@ -80,7 +80,11 @@ public class Osobnik implements Comparable<Osobnik>{
 		        }else{
 		        	childArg = Double.longBitsToDouble(Long.parseLong(childGenome, 2));
 		        }
-        	}while(new Double(childArg).toString().indexOf('E')!=-1 && Integer.parseInt(new Double(childArg).toString().split("E")[1]) > 10);
+        	}while(
+        		new Double(childArg).toString().indexOf('E')!=-1
+        		&&
+        		Math.abs(Integer.parseInt(new Double(childArg).toString().split("E")[1])) > 128
+        	);
         	argumentyDziecka.add(childArg);
         }
         Osobnik dziecko = new Osobnik(argumentyDziecka);

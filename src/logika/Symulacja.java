@@ -36,12 +36,12 @@ public class Symulacja {
 	
     public void wlaczMenu(){
     	//getVariables();
-        int liczbaOsobnikow = 1000;
-        double min = -10000;
-        double max = 10000;
-        double epsilon = 0.1;
-        int liczbaArgumentow = 3;
-        int liczbaPokolen = 100;
+        liczbaOsobnikow = 1000;
+        min = -10000;
+        max = 10000;
+        epsilon = 5 * Math.pow(10,-10);
+        liczbaArgumentow = 3;
+        liczbaPokolen = 100;
 
         Populacja pop = new Populacja(liczbaPokolen, epsilon, liczbaOsobnikow, liczbaArgumentow, min, max);
         LinkedList<Double> x = new LinkedList<>();

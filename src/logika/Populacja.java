@@ -4,7 +4,8 @@ import java.util.Collections;
 import java.util.LinkedList;
 
 /**
- * Created by Beata on 2015-04-21.
+ * @author Beata
+ * @version 1.00, 04/21/2015
  */
 public class Populacja {
 	

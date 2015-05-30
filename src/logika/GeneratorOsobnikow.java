@@ -3,7 +3,8 @@ package logika;
 import java.util.LinkedList;
 
 /**
- * Created by Kamil on 2015-04-20.
+ * @author Kamil
+ * @version 1.00, 04/20/2015
  */
 public class GeneratorOsobnikow {
     int liczbaOsobnikow;

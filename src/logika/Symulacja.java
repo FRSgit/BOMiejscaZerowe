@@ -4,7 +4,8 @@ import java.util.LinkedList;
 import java.util.Scanner;
 
 /**
- * Created by Kamil on 2015-04-20.
+ * @author Kamil
+ * @version 1.00, 04/20/2015
  */
 public class Symulacja {
 	private
@@ -31,6 +32,7 @@ public class Symulacja {
 		max = Double.parseDouble(getUserInput("Podaj górn¹ granice badanego przedzia³u:"));
 		liczbaPokolen = Integer.parseInt(getUserInput("Podaj liczbê pokoleñ:"));
 		liczbaArgumentow = Integer.parseInt(getUserInput("Podaj liczbê zmiennych w funkcji:"));
+		liczbaArgumentow = Integer.parseInt(getUserInput("Podaj jaka ma byæ minimalna dok³adnoœæ otrzymanego wyniku [5*10^(-10)]:"));
 		scan.close();
 	}
 	

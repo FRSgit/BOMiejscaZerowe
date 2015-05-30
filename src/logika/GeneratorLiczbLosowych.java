@@ -3,7 +3,8 @@ package logika;
 import java.util.Random;
 
 /**
- * Created by Kamil on 2015-04-20.
+ * @author Kamil
+ * @version 1.00, 04/20/2015
  */
 public class GeneratorLiczbLosowych {
     public static Random generator = new Random();
@@ -16,7 +17,7 @@ public class GeneratorLiczbLosowych {
         return generator.nextInt(max - min + 1) + min;
     }
 
-    public static boolean generujBoolean() {
+    public static boolean generateBoolean() {
         return generator.nextBoolean();
     }
 }

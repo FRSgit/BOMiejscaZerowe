@@ -38,19 +38,19 @@ public class Population {
     }
 	
 	public void nextGeneration(){
-		LinkedList<Specimen> nowePokolenie = new LinkedList<Specimen>();
-        int liczbaOsobnikow = specimens.size();
+		LinkedList<Specimen> newGeneration = new LinkedList<Specimen>();
+        int numberOfSpecimens = specimens.size();
 		for(int i = 0; i < specimens.size(); i++){
 			for(int j = 0; j<1/ probabilityOfSurvival; j++){
-				int secondParent = RandomNumbersGenerator.generateInteger(0, liczbaOsobnikow - 1);
+				int secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
 				while(secondParent == i)
-					secondParent = RandomNumbersGenerator.generateInteger(0, liczbaOsobnikow - 1);
-				Specimen dziecko = specimens.get(i).crossover(specimens.get(secondParent));
-				nowePokolenie.add(dziecko);
+					secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
+				Specimen child = specimens.get(i).crossover(specimens.get(secondParent));
+				newGeneration.add(child);
 			}
 		}
 
-        specimens = nowePokolenie;
+        specimens = newGeneration;
         assignValuesToSpecimens();
         sortSpecimens();
         clearPopulationOfWeakSpecimens();

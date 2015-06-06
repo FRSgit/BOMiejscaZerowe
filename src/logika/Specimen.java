@@ -10,16 +10,16 @@ public class Specimen implements Comparable<Specimen>{
     public LinkedList<Double> arguments;
 
     /**
-     * O jak¹ czêœæ argumentu argument ulegnie zmianie (zwiêkszy siê lub zmniejszy)
+     * O jakÄ… czÄ™Å›Ä‡ argumentu argument ulegnie zmianie (zwiÄ™kszy siÄ™ lub zmniejszy)
      */
     public Double mutationFactor;
 
     /**
-     * Wartoœæ jak¹ function przyjmuje dla argumentów osobnika (ustawiana przez klasê Populacja)
+     * WartoÅ›Ä‡ jakÄ… function przyjmuje dla argumentÃ³w osobnika (ustawiana przez klasÄ… Populacja)
      */
     public Double value;
     /**
-     * Szansa mutacji wyra¿ona w iloœci procent
+     * Szansa mutacji wyraÅ¼ona w iloÅ›ci procent
      */
     public int probabilityOfMutation;
 
@@ -27,21 +27,21 @@ public class Specimen implements Comparable<Specimen>{
     private final int standardProbabilityOfMutation = 10;
 
     public Specimen() {
-        initialize(new LinkedList<>(), standardMutationFactor, standardProbabilityOfMutation);
+        initialize(new LinkedList<Double>(), standardMutationFactor, standardProbabilityOfMutation);
     }
 
     public Specimen(LinkedList<Double> arguments) {
         initialize(arguments, standardMutationFactor, standardProbabilityOfMutation);
     }
 
-    public Specimen(LinkedList<Double> arguments, Double wspolczynnikMutowania, int probabilityOfMutation) {
-        initialize(arguments, wspolczynnikMutowania, probabilityOfMutation);
+    public Specimen(LinkedList<Double> arguments, Double mutationFactor, int probabilityOfMutation) {
+        initialize(arguments, mutationFactor, probabilityOfMutation);
     }
 
-    private void initialize(LinkedList<Double> argumenty, Double wspolczynnikMutowania, int szansaMutacji) {
-        this.arguments = argumenty;
-        this.mutationFactor = wspolczynnikMutowania;
-        this.probabilityOfMutation = szansaMutacji;
+    private void initialize(LinkedList<Double> arguments, Double mutationFactor, int probabilityOfMutation) {
+        this.arguments = arguments;
+        this.mutationFactor = mutationFactor;
+        this.probabilityOfMutation = probabilityOfMutation;
     }
 
     public void mutate() {
@@ -63,7 +63,7 @@ public class Specimen implements Comparable<Specimen>{
     }
 
     public Specimen crossover(Specimen specimen) {
-        LinkedList<Double> argumentyDziecka = new LinkedList<>();
+        LinkedList<Double> argumentyDziecka = new LinkedList<Double>();
         for (int i = 0; i < arguments.size(); ++i){
         	String childGenome;
         	String XGenome = Long.toBinaryString(Double.doubleToRawLongBits(this.arguments.get(i)));
@@ -81,29 +81,27 @@ public class Specimen implements Comparable<Specimen>{
 		        	childArg = Double.longBitsToDouble(Long.parseLong(childGenome, 2));
 		        }
         	}while(
-        		new Double(childArg).toString().indexOf('E')!=-1
+        		Double.toString(childArg).indexOf('E')!=-1
         		&&
-        		Math.abs(Integer.parseInt(new Double(childArg).toString().split("E")[1])) > 128
+        		Math.abs(Integer.parseInt(Double.toString(childArg).split("E")[1])) > 128
         	);
         	argumentyDziecka.add(childArg);
         }
         Specimen dziecko = new Specimen(argumentyDziecka);
-        if (dziecko.shouldMutate()) {
+        if (dziecko.shouldMutate())
             dziecko.mutate();
-        }
         return dziecko;
     }
 
     public int compareTo(Specimen o) {
         double wartoscOsobnika = Math.abs(o.value);
         double wartoscThisOsobnika = Math.abs(this.value);
-        if (wartoscThisOsobnika < wartoscOsobnika) {
+        if (wartoscThisOsobnika < wartoscOsobnika)
             return 1;
-        } else if (wartoscThisOsobnika == wartoscOsobnika) {
+        else if (wartoscThisOsobnika == wartoscOsobnika)
             return 0;
-        } else {
+        else
             return -1;
-        }
     }
 
     public void print() {

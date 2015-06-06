@@ -7,27 +7,27 @@ import java.util.LinkedList;
  * @version 1.00, 04/20/2015
  */
 public class SpecimenGenerator {
-    int liczbaOsobnikow;
-    int liczbaArgumentow;
+    int numberOfSpecimens;
+    int numberOfArguments;
     double min;
     double max;
 
-    public SpecimenGenerator(int liczbaOsobnikow, int liczbaArgumentow, double min, double max) {
-        this.liczbaOsobnikow = liczbaOsobnikow;
-        this.liczbaArgumentow = liczbaArgumentow;
+    public SpecimenGenerator(int numberOfSpecimens, int numberOfArguments, double min, double max) {
+        this.numberOfSpecimens = numberOfSpecimens;
+        this.numberOfArguments = numberOfArguments;
         this.min = min;
         this.max = max;
     }
 
     public LinkedList<Specimen> generuj() {
-        LinkedList<Specimen> listaOsobnikow = new LinkedList<Specimen>();
-        for (int i = 0; i < liczbaOsobnikow; ++i) {
+        LinkedList<Specimen> specimensList = new LinkedList<Specimen>();
+        for (int i = 0; i < numberOfSpecimens; ++i) {
             LinkedList<Double> argumenty = new LinkedList<Double>();
-            for (int j = 0; j < liczbaArgumentow; ++j) {
+            for (int j = 0; j < numberOfArguments; ++j) {
                 argumenty.add(RandomNumbersGenerator.generateDouble(min, max));
             }
-            listaOsobnikow.add(new Specimen(argumenty));
+            specimensList.add(new Specimen(argumenty));
         }
-        return listaOsobnikow;
+        return specimensList;
     }
 }

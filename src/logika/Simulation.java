@@ -1,61 +1,75 @@
 package logika;
 
 import java.util.LinkedList;
-import java.util.Scanner;
 
 /**
- * Created by Kamil on 2015-04-20.
+ *
+ * @author FRS
  */
-public class Simulation {
+public final class Simulation extends javax.swing.JPanel {
     int specimens;
     double min;
     double max;
-    double epsilon = 0.1;
+    double epsilon;
     int numberOfArguments;
     int numberOfGenerations;
-    Scanner scanner;
     Population population;
-
-
-    private String getUserInput(String msg) {
-        String result = null;
-        System.out.print(msg + "\n");
-        result = scanner.next();
-        return result;
-    }
-
-    private void getVariables() {
-        scanner = new Scanner(System.in);
-        //System.out.print("Symulacja 1.05323c night build BO523212 rev. 3\n");
-        specimens = Integer.parseInt(getUserInput("Podaj pocz¹tkow¹ liczbê osobników:"));
-        min = Double.parseDouble(getUserInput("Podaj doln¹ granice badanego przedzia³u:"));
-        max = Double.parseDouble(getUserInput("Podaj górn¹ granice badanego przedzia³u:"));
-        numberOfGenerations = Integer.parseInt(getUserInput("Podaj liczbê pokoleñ:"));
-        numberOfArguments = Integer.parseInt(getUserInput("Podaj liczbê zmiennych w funkcji:"));
-        scanner.close();
-    }
-
-    public void menu() {
-        //getVariables();
+    FunctionOfSeveralVariables fncwz;
+    
+    /**
+     * Creates new form Simulation
+     */
+    public Simulation() {
         specimens = 1000;
         min = -10000;
         max = 10000;
         epsilon = 5 * Math.pow(10, -10);
         numberOfArguments = 3;
         numberOfGenerations = 100;
+        
+        fncwz = getFunctionFromUser();
 
-        //FunctionOfSeveralVariables fncwz = getTestFunction();
-        FunctionOfSeveralVariables fncwz = getFunctionFromUser();
-
-        population = new Population(fncwz, specimens, min, max);
-        Specimen foundSpecimen = findRoot();
-        System.out.print("Znaleziony osobnik: ");
-        foundSpecimen.print();
+        
+        initComponents();
+        
     }
+    
+    /**
+     * Creates new form Simulation
+     */
+    public Simulation(int _specimens, double _min, double _max, double _epsilon, int _numberOfArguments, int _numberOfGenerations, FunctionOfSeveralVariables _fncwz) {
+        specimens = 1000;
+        min = -10000;
+        max = 10000;
+        epsilon = 5 * Math.pow(10, -10);
+        numberOfArguments = 3;
+        numberOfGenerations = 100;
+        
+        fncwz = getFunctionFromUser();
 
+        initComponents();
+        
+    }
+    
+    /**
+     * Start simulation
+     */
+    public void start(){
+        population = new Population(fncwz, specimens, min, max);
+        
+        Specimen foundSpecimen = findRoot();
+        mainPanel.add(population);
+        mainPanel.setSize(population.getWidth(), population.getHeight());
+        mainPanel.repaint();
+        mainPanel.revalidate();
+        mainScrollPane.repaint();
+        mainScrollPane.revalidate();
+        System.out.print("Znaleziony osobnik: ");
+        //foundSpecimen.print();
+    }
+    
     public FunctionOfSeveralVariables getFunctionFromUser() {
-        LinkedList<LinkedList<Double>> funkcja = new LinkedList<LinkedList<Double>>();
-        Scanner in = new Scanner(System.in);
+        /*LinkedList<LinkedList<Double>> function = new LinkedList<LinkedList<Double>>();
         System.out.print("\nPodaj ilosc zmiennych funkcji: ");
         numberOfArguments = in.nextInt();
         for (int i = 0; i < numberOfArguments; ++i) {
@@ -66,22 +80,42 @@ public class Simulation {
                 System.out.print("\nPodaj wspolczynnik przy zmiennej nr " + Integer.toString(i + 1) + " do potegi " + j + ": ");
                 functionFactors.add(in.nextDouble());
             }
-            funkcja.add(functionFactors);
+            function.add(functionFactors);
         }
-        return new FunctionOfSeveralVariables(funkcja);
+        return new FunctionOfSeveralVariables(function);*/
+        
+        LinkedList<Double> x = new LinkedList<Double>();
+        LinkedList<Double> y = new LinkedList<Double>();
+        LinkedList<Double> z = new LinkedList<Double>();
+
+        x.add(new Double(-59));
+        x.add(new Double(120));
+        x.add(new Double(-47.29));
+        y.add(new Double(99.20));
+        y.add(new Double(-103.52));
+        z.add(new Double(100.3));
+        z.add(new Double(33.283));
+        z.add(new Double(-173.44));
+        z.add(new Double(83.2));
+
+        LinkedList<LinkedList<Double>> fnc = new LinkedList<LinkedList<Double>>();
+        fnc.add(x);
+        fnc.add(y);
+        fnc.add(z);
+        return new FunctionOfSeveralVariables(fnc);
     }
 
     public Specimen findRoot() {
         Specimen currentBestSpecimen = new Specimen();
         for(int i = 1; i < numberOfGenerations; i++){
-            population.nextGeneration();
+            population.nextGeneration(i);
             System.out.print("Pokolenie no " + i + ", aktualny najlepszy osobnik: ");
             currentBestSpecimen = population.getBestSpecimen();
             currentBestSpecimen.print();
+            mainPanel.repaint();
+            mainPanel.revalidate();
             if (Math.abs(currentBestSpecimen.value) < epsilon)
-            {
                 break;
-            }
         }
         return currentBestSpecimen;
     }
@@ -98,25 +132,103 @@ public class Simulation {
         }
     }
 
-    private FunctionOfSeveralVariables getTestFunction() {
-        LinkedList<Double> x = new LinkedList<>();
-        LinkedList<Double> y = new LinkedList<>();
-        LinkedList<Double> z = new LinkedList<>();
+    /**
+     * This method is called from within the constructor to initialize the form.
+     * WARNING: Do NOT modify this code. The content of this method is always
+     * regenerated by the Form Editor.
+     */
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
 
-        x.add(new Double(-59));
-        x.add(new Double(120));
-        x.add(new Double(-47.29));
-        y.add(new Double(99.20));
-        y.add(new Double(-103.52));
-        z.add(new Double(100.3));
-        z.add(new Double(33.283));
-        z.add(new Double(-173.44));
-        z.add(new Double(83.2));
+        mainScrollPane = new javax.swing.JScrollPane();
+        mainPanel = new javax.swing.JPanel();
+        jToolBar1 = new javax.swing.JToolBar();
+        jProgressBar1 = new javax.swing.JProgressBar();
+        jButton1 = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
 
-        LinkedList<LinkedList<Double>> fnc = new LinkedList<>();
-        fnc.add(x);
-        fnc.add(y);
-        fnc.add(z);
-        return new FunctionOfSeveralVariables(fnc);
-    }
+        setMinimumSize(new java.awt.Dimension(0, 287));
+        setPreferredSize(new java.awt.Dimension(580, 287));
+
+        mainScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+
+        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
+        mainPanel.setLayout(mainPanelLayout);
+        mainPanelLayout.setHorizontalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 578, Short.MAX_VALUE)
+        );
+        mainPanelLayout.setVerticalGroup(
+            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 238, Short.MAX_VALUE)
+        );
+
+        mainScrollPane.setViewportView(mainPanel);
+
+        jToolBar1.setFloatable(false);
+        jToolBar1.setRollover(true);
+        jToolBar1.setBorderPainted(false);
+        jToolBar1.setMinimumSize(new java.awt.Dimension(82, 34));
+        jToolBar1.setPreferredSize(new java.awt.Dimension(100, 34));
+
+        jProgressBar1.setBorder(javax.swing.BorderFactory.createEmptyBorder(4, 4, 4, 4));
+        jProgressBar1.setEnabled(false);
+        jProgressBar1.setMaximumSize(new java.awt.Dimension(32767, 34));
+        jProgressBar1.setMinimumSize(new java.awt.Dimension(20, 34));
+        jProgressBar1.setPreferredSize(new java.awt.Dimension(530, 34));
+        jToolBar1.add(jProgressBar1);
+
+        jButton1.setText("â—™");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setMaximumSize(new java.awt.Dimension(30, 34));
+        jButton1.setMinimumSize(new java.awt.Dimension(30, 34));
+        jButton1.setPreferredSize(new java.awt.Dimension(30, 34));
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToolBar1.add(jButton1);
+
+        jToggleButton1.setText(">");
+        jToggleButton1.setFocusable(false);
+        jToggleButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jToggleButton1.setMaximumSize(new java.awt.Dimension(30, 34));
+        jToggleButton1.setMinimumSize(new java.awt.Dimension(30, 34));
+        jToggleButton1.setPreferredSize(new java.awt.Dimension(30, 34));
+        jToggleButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+        jToolBar1.add(jToggleButton1);
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(mainScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+    }// </editor-fold>//GEN-END:initComponents
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        start();
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
+    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JPanel mainPanel;
+    private javax.swing.JScrollPane mainScrollPane;
+    // End of variables declaration//GEN-END:variables
 }

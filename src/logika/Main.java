@@ -1,10 +1,12 @@
 package logika;
 
 public class Main {
-
+    /**
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
-        Simulation sim = new Simulation();
-        sim.menu();
+        ApplicationWindow app = new ApplicationWindow();
+        app.showWindow();
     }
 
 }

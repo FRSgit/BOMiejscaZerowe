@@ -8,17 +8,21 @@ import java.util.LinkedList;
  */
 public class FunctionOfSeveralVariables {
     /**
-     * Lista list okreœlaj¹ca ca³¹ funkcjê.
+     * Lista list okreÅ›lajÄ…ca caÅ‚Ä… funkcjÄ™.
      *
-     * W pierwszym wymiarze odpowiada iloœci argumentów funkcji, w drugim wspó³czynnikom dla
-     * ka¿dego z argumentu. Np. f(x, y) = x^2 + x + y, to lista function bêdzie dwuelementowa.
-     * Pierwszy z jej elementów to bêdzie lista trzyelementowa (x0, x1, x2), a drugi to bêdzie
+     * W pierwszym wymiarze odpowiada iloÅ›ci argumentÃ³w funkcji, w drugim wspÃ³Å‚czynnikom dla
+     * kaÅ¼dego z argumentu. Np. f(x, y) = x^2 + x + y, to lista function bÄ™dzie dwuelementowa.
+     * Pierwszy z jej elementÃ³w to bÄ™dzie lista trzyelementowa (x0, x1, x2), a drugi to bÄ™dzie
      * lista dwuelementowa (y0, y1).
      */
     public LinkedList<LinkedList<Double>> function;
 
     public FunctionOfSeveralVariables(LinkedList<LinkedList<Double>> function) {
         this.function = function;
+    }
+    
+    public FunctionOfSeveralVariables(String function) {
+        this.function = fromString(function);
     }
 
     public double calculateValue(LinkedList<Double> arguments) {
@@ -32,5 +36,15 @@ public class FunctionOfSeveralVariables {
             }
         }
         return  wynik;
+    }
+    
+    public LinkedList<LinkedList<Double>> fromString(String func){
+        //TODO: fromString
+        return new LinkedList<LinkedList<Double>>();
+    }
+    @Override
+    public String toString(){
+        //TODO: toString
+        return "x+y";
     }
 }

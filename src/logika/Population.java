@@ -50,19 +50,19 @@ public final class Population extends javax.swing.JPanel {
     }
 	
     public void nextGeneration(int noOfGeneration){
-        LinkedList<Specimen> nowePokolenie = new LinkedList<Specimen>();
+        LinkedList<Specimen> newGeneration = new LinkedList<Specimen>();
         int numberOfSpecimens = specimens.size();
         for(int i = 0; i < numberOfSpecimens; i++){
             for(int j = 0; j<1/ probabilityOfSurvival; j++){
                 int secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
                 while(secondParent == i)
                     secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
-                Specimen dziecko = specimens.get(i).crossover(specimens.get(secondParent));
-                nowePokolenie.add(dziecko);
+                Specimen child = specimens.get(i).crossover(specimens.get(secondParent));
+                newGeneration.add(child);
             }
         }
         
-        specimens = nowePokolenie;
+        specimens = newGeneration;
         assignValuesToSpecimens();
         sortSpecimens();
         

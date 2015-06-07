@@ -1,9 +1,12 @@
 package logika;
 
-import java.awt.Component;
+import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.LinkedList;
-import javax.swing.JScrollPane;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JTextArea;
 
 /**
  *
@@ -57,18 +60,37 @@ public final class Simulation extends javax.swing.JPanel {
      * Start simulation
      */
     public void start(){
-        population = new Population(fncwz, specimens, min, max);
+        System.out.print(mainScrollPane.getWidth()+"\n\n");
+        population = new Population(fncwz, specimens, min, max); 
+        
         Specimen foundSpecimen = findRoot();
-        population.setPreferredSize(new Dimension(population.getWidth(), population.getHeight()));
+        
         mainScrollPane.setViewportView(population);
+        population.setPreferredSize(new Dimension(population.getWidth(), population.getHeight()));
         mainScrollPane.revalidate();
         mainScrollPane.repaint();
-        //newPanel.setSize(population.getWidth(), population.getHeight());
-        //System.out.print(mainPanel.getWidth()+"\n\n");
-        System.out.print(population.getWidth()+"\n\n");
-        System.out.print(mainScrollPane.getWidth()+"\n\n");
+        
+        
         System.out.print("Znaleziony osobnik: ");
-        //foundSpecimen.print();
+        foundSpecimen.print();
+    }
+    
+    public void openBestSpecimenModal(Specimen bestSpecimen){
+        //TODO:
+        JDialog argumentsModal = new JDialog();
+        JLabel title = new JLabel("Function arguments", JLabel.CENTER);
+        JButton closeButton = new JButton("Close");
+        //JTextArea bestArguments = new JTextArea(bestSpecimen.print());
+
+        argumentsModal.setPreferredSize(new java.awt.Dimension(400, 150));
+        
+        argumentsModal.getContentPane().add(title);
+        //argumentsModal.getContentPane().add(bestArguments);
+        argumentsModal.getContentPane().add(closeButton, BorderLayout.PAGE_END);
+        
+        add(argumentsModal);
+        revalidate();
+        repaint();
     }
     
     public FunctionOfSeveralVariables getFunctionFromUser() {
@@ -115,8 +137,6 @@ public final class Simulation extends javax.swing.JPanel {
             System.out.print("Pokolenie no " + i + ", aktualny najlepszy osobnik: ");
             currentBestSpecimen = population.getBestSpecimen();
             currentBestSpecimen.print();
-            //TODO: mainPanel.repaint();
-            //mainPanel.revalidate();
             if (Math.abs(currentBestSpecimen.value) < epsilon)
                 break;
         }

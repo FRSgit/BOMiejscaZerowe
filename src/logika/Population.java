@@ -3,6 +3,8 @@ package logika;
 import java.awt.Component;
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -50,31 +52,40 @@ public final class Population extends javax.swing.JPanel {
     }
 	
     public void nextGeneration(int noOfGeneration){
-        LinkedList<Specimen> newGeneration = new LinkedList<Specimen>();
-        int numberOfSpecimens = specimens.size();
-        for(int i = 0; i < numberOfSpecimens; i++){
-            for(int j = 0; j<1/ probabilityOfSurvival; j++){
-                int secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
-                while(secondParent == i)
-                    secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
-                Specimen child = specimens.get(i).crossover(specimens.get(secondParent));
-                newGeneration.add(child);
+        Thread generateNextGeneration = new Thread() {
+            public void run() {
+                
+                LinkedList<Specimen> newGeneration = new LinkedList<Specimen>();
+                int numberOfSpecimens = specimens.size();
+                for(int i = 0; i < numberOfSpecimens; i++){
+                    for(int j = 0; j<1/ probabilityOfSurvival; j++){
+                        int secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
+                        while(secondParent == i)
+                            secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
+                        Specimen child = specimens.get(i).crossover(specimens.get(secondParent));
+                        newGeneration.add(child);
+                    }
+                }
+
+                specimens = newGeneration;
+                assignValuesToSpecimens();
+                sortSpecimens();
+                
             }
+        };
+        
+        try {
+            generateNextGeneration.start();
+            generateNextGeneration.join();  
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Population.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-        specimens = newGeneration;
-        assignValuesToSpecimens();
-        sortSpecimens();
-        
-        int populationGrowth = specimens.size() - numberOfSpecimens;
-        double numberOfSpecimensToBeKilled = clearPopulationOfWeakSpecimens();
-        double bestValue = getBestSpecimen().value;
-        
         GenerationGraphic generationGraphic;
-        generationGraphic = new GenerationGraphic(noOfGeneration, specimens.size(), (int) numberOfSpecimensToBeKilled, populationGrowth, bestValue);
-        
+        generationGraphic = new GenerationGraphic(noOfGeneration, specimens.size(), getBestSpecimen());
+
         setSize(noOfGeneration * (generationGraphic.getWidth() + 20), generationGraphic.getHeight());
-        
+
         Component addedGeneration = add(generationGraphic);
         addedGeneration.setLocation((noOfGeneration - 1) * (generationGraphic.getWidth() + 20), 0 );
     }

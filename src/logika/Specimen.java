@@ -104,8 +104,11 @@ public class Specimen implements Comparable<Specimen>{
     }
 
     public void print() {
+        //String result = new String();
         System.out.print("value: " + value + ", arguments: ");
+       // char tmpLetter = 'A';
         for (Double argument : arguments) {
+           // result += tmpLetter + " = " + argument + "\n";
             System.out.print(argument);
             if (!arguments.getLast().equals(argument)) {
                 System.out.print(", ");
@@ -114,5 +117,6 @@ public class Specimen implements Comparable<Specimen>{
             }
         }
         System.out.println();
+        //return result;
     }
 }

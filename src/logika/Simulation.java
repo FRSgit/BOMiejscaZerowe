@@ -3,6 +3,8 @@ package logika;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.LinkedList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -134,6 +136,7 @@ public final class Simulation extends javax.swing.JPanel {
         Specimen currentBestSpecimen = new Specimen();
         for(int i = 1; i < numberOfGenerations; i++){
             population.nextGeneration(i);
+            
             System.out.print("Pokolenie no " + i + ", aktualny najlepszy osobnik: ");
             currentBestSpecimen = population.getBestSpecimen();
             currentBestSpecimen.print();

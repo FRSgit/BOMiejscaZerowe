@@ -52,35 +52,24 @@ public final class Population extends javax.swing.JPanel {
     }
 	
     public void nextGeneration(int noOfGeneration){
-        Thread generateNextGeneration = new Thread() {
-            public void run() {
-                
-                LinkedList<Specimen> newGeneration = new LinkedList<Specimen>();
-                int numberOfSpecimens = specimens.size();
-                for(int i = 0; i < numberOfSpecimens; i++){
-                    for(int j = 0; j<1/ probabilityOfSurvival; j++){
-                        int secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
-                        while(secondParent == i)
-                            secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
-                        Specimen child = specimens.get(i).crossover(specimens.get(secondParent));
-                        newGeneration.add(child);
-                    }
-                }
-
-                specimens = newGeneration;
-                assignValuesToSpecimens();
-                sortSpecimens();
-                
+         
+        LinkedList<Specimen> newGeneration = new LinkedList<Specimen>();
+        int numberOfSpecimens = specimens.size();
+        for(int i = 0; i < numberOfSpecimens; i++){
+            for(int j = 0; j<1/ probabilityOfSurvival; j++){
+                int secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
+                while(secondParent == i)
+                    secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
+                Specimen child = specimens.get(i).crossover(specimens.get(secondParent));
+                newGeneration.add(child);
             }
-        };
-        
-        try {
-            generateNextGeneration.start();
-            generateNextGeneration.join();  
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Population.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        specimens.clear();
+        specimens = newGeneration;
+        assignValuesToSpecimens();
+        sortSpecimens();
+        clearPopulationOfWeakSpecimens();
+
         GenerationGraphic generationGraphic;
         generationGraphic = new GenerationGraphic(noOfGeneration, specimens.size(), getBestSpecimen());
 

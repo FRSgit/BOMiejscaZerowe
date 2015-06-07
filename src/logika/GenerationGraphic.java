@@ -75,8 +75,6 @@ public class GenerationGraphic extends javax.swing.JPanel{
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        argumentPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         mainPanel = new javax.swing.JPanel();
         mainlLabel = new javax.swing.JLabel();
         generationNumber = new javax.swing.JLabel();
@@ -85,34 +83,14 @@ public class GenerationGraphic extends javax.swing.JPanel{
         jButton1 = new javax.swing.JButton();
         bestValue = new javax.swing.JLabel();
         bestValueLabel = new javax.swing.JLabel();
+        argumentPanel = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
 
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(120, 160));
         setMinimumSize(new java.awt.Dimension(120, 160));
         setPreferredSize(new java.awt.Dimension(120, 160));
         setLayout(new java.awt.CardLayout());
-
-        jLabel1.setFont(new java.awt.Font("Open Sans Light", 1, 14)); // NOI18N
-        jLabel1.setText("Best arguments");
-
-        javax.swing.GroupLayout argumentPanelLayout = new javax.swing.GroupLayout(argumentPanel);
-        argumentPanel.setLayout(argumentPanelLayout);
-        argumentPanelLayout.setHorizontalGroup(
-            argumentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, argumentPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
-        );
-        argumentPanelLayout.setVerticalGroup(
-            argumentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(argumentPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(129, Short.MAX_VALUE))
-        );
-
-        add(argumentPanel, "card2");
 
         mainlLabel.setFont(new java.awt.Font("Open Sans Light", 1, 14)); // NOI18N
         mainlLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -157,25 +135,27 @@ public class GenerationGraphic extends javax.swing.JPanel{
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(generationNumber, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(mainPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(mainlLabel))
-                        .addGroup(mainPanelLayout.createSequentialGroup()
-                            .addComponent(noOfSpecimensLabel)
-                            .addGap(2, 2, 2)
-                            .addComponent(noOfSpecimens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGroup(mainPanelLayout.createSequentialGroup()
-                            .addContainerGap()
-                            .addComponent(bestValueLabel)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(bestValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                    .addComponent(generationNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGap(22, 22, 22)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(mainPanelLayout.createSequentialGroup()
+                                    .addComponent(noOfSpecimensLabel)
+                                    .addGap(2, 2, 2)
+                                    .addComponent(noOfSpecimens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGroup(mainPanelLayout.createSequentialGroup()
+                                    .addContainerGap()
+                                    .addComponent(bestValueLabel)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(bestValue, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)))
+                            .addComponent(mainlLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(mainPanelLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
@@ -184,7 +164,7 @@ public class GenerationGraphic extends javax.swing.JPanel{
                 .addGap(6, 6, 6)
                 .addComponent(mainlLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(generationNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(generationNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(noOfSpecimensLabel)
@@ -193,12 +173,34 @@ public class GenerationGraphic extends javax.swing.JPanel{
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bestValueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(bestValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         add(mainPanel, "card3");
+
+        jLabel1.setFont(new java.awt.Font("Open Sans Light", 1, 14)); // NOI18N
+        jLabel1.setText("Best arguments");
+
+        javax.swing.GroupLayout argumentPanelLayout = new javax.swing.GroupLayout(argumentPanel);
+        argumentPanel.setLayout(argumentPanelLayout);
+        argumentPanelLayout.setHorizontalGroup(
+            argumentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, argumentPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1)
+                .addContainerGap())
+        );
+        argumentPanelLayout.setVerticalGroup(
+            argumentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(argumentPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel1)
+                .addContainerGap(129, Short.MAX_VALUE))
+        );
+
+        add(argumentPanel, "card2");
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

@@ -71,19 +71,18 @@ public class Specimen implements Comparable<Specimen>{
         	int shorterGenome = (YGenome.length()>XGenome.length())?XGenome.length():YGenome.length();
         	double childArg = 0;
         	do{
-        		childGenome = "";
-	        	for(int j = 0; j < shorterGenome; j++)
-	        		childGenome += (RandomNumbersGenerator.generateBoolean())?XGenome.charAt(j):YGenome.charAt(j);
+                    childGenome = "";
+                    for(int j = 0; j < shorterGenome; j++)
+                        childGenome += (RandomNumbersGenerator.generateBoolean())?XGenome.charAt(j):YGenome.charAt(j);
 	    	    if(childGenome.length() == 64 && childGenome.charAt(0) == '1') {
 	                String negBinStr = childGenome.substring(1);
 	                childArg = -1 * Double.longBitsToDouble(Long.parseLong(negBinStr, 2));
-		        }else{
-		        	childArg = Double.longBitsToDouble(Long.parseLong(childGenome, 2));
-		        }
+		        }else
+                            childArg = Double.longBitsToDouble(Long.parseLong(childGenome, 2));
         	}while(
-        		Double.toString(childArg).indexOf('E')!=-1
-        		&&
-        		Math.abs(Integer.parseInt(Double.toString(childArg).split("E")[1])) > 128
+                    Double.toString(childArg).indexOf('E')!=-1
+                    &&
+                    Math.abs(Integer.parseInt(Double.toString(childArg).split("E")[1])) > 128
         	);
         	argumentyDziecka.add(childArg);
         }

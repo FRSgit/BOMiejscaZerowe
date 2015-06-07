@@ -73,8 +73,7 @@ public final class Population extends javax.swing.JPanel {
         GenerationGraphic generationGraphic;
         generationGraphic = new GenerationGraphic(noOfGeneration, specimens.size(), (int) numberOfSpecimensToBeKilled, populationGrowth, bestValue);
         
-        System.out.print(noOfGeneration * generationGraphic.getWidth());
-        setSize(noOfGeneration * (generationGraphic.getWidth() + 20), 240);
+        setSize(noOfGeneration * (generationGraphic.getWidth() + 20), generationGraphic.getHeight());
         
         Component addedGeneration = add(generationGraphic);
         addedGeneration.setLocation((noOfGeneration - 1) * (generationGraphic.getWidth() + 20), 0 );
@@ -111,7 +110,6 @@ public final class Population extends javax.swing.JPanel {
 
         setMaximumSize(new java.awt.Dimension(32767, 240));
         setMinimumSize(new java.awt.Dimension(580, 240));
-        setPreferredSize(new java.awt.Dimension(580, 240));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

@@ -1,6 +1,9 @@
 package logika;
 
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.LinkedList;
+import javax.swing.JScrollPane;
 
 /**
  *
@@ -28,7 +31,6 @@ public final class Simulation extends javax.swing.JPanel {
         numberOfGenerations = 100;
         
         fncwz = getFunctionFromUser();
-
         
         initComponents();
         
@@ -48,7 +50,7 @@ public final class Simulation extends javax.swing.JPanel {
         fncwz = getFunctionFromUser();
 
         initComponents();
-        
+
     }
     
     /**
@@ -56,14 +58,15 @@ public final class Simulation extends javax.swing.JPanel {
      */
     public void start(){
         population = new Population(fncwz, specimens, min, max);
-        
         Specimen foundSpecimen = findRoot();
-        mainPanel.add(population);
-        mainPanel.setSize(population.getWidth(), population.getHeight());
-        mainPanel.repaint();
-        mainPanel.revalidate();
-        mainScrollPane.repaint();
+        population.setPreferredSize(new Dimension(population.getWidth(), population.getHeight()));
+        mainScrollPane.setViewportView(population);
         mainScrollPane.revalidate();
+        mainScrollPane.repaint();
+        //newPanel.setSize(population.getWidth(), population.getHeight());
+        //System.out.print(mainPanel.getWidth()+"\n\n");
+        System.out.print(population.getWidth()+"\n\n");
+        System.out.print(mainScrollPane.getWidth()+"\n\n");
         System.out.print("Znaleziony osobnik: ");
         //foundSpecimen.print();
     }
@@ -112,8 +115,8 @@ public final class Simulation extends javax.swing.JPanel {
             System.out.print("Pokolenie no " + i + ", aktualny najlepszy osobnik: ");
             currentBestSpecimen = population.getBestSpecimen();
             currentBestSpecimen.print();
-            mainPanel.repaint();
-            mainPanel.revalidate();
+            //TODO: mainPanel.repaint();
+            //mainPanel.revalidate();
             if (Math.abs(currentBestSpecimen.value) < epsilon)
                 break;
         }
@@ -121,15 +124,13 @@ public final class Simulation extends javax.swing.JPanel {
     }
 
     public static void printList(LinkedList<Object> list) {
-        for (Object obj : list) {
+        for (Object obj : list)
             System.out.println(obj);
-        }
     }
 
     public static void printSpecimens(LinkedList<Specimen> list) {
-        for (Specimen o : list) {
+        for (Specimen o : list)
             System.out.println(o.value);
-        }
     }
 
     /**
@@ -142,7 +143,6 @@ public final class Simulation extends javax.swing.JPanel {
     private void initComponents() {
 
         mainScrollPane = new javax.swing.JScrollPane();
-        mainPanel = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jProgressBar1 = new javax.swing.JProgressBar();
         jButton1 = new javax.swing.JButton();
@@ -151,20 +151,9 @@ public final class Simulation extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(0, 287));
         setPreferredSize(new java.awt.Dimension(580, 287));
 
-        mainScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
-
-        javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
-        mainPanel.setLayout(mainPanelLayout);
-        mainPanelLayout.setHorizontalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 578, Short.MAX_VALUE)
-        );
-        mainPanelLayout.setVerticalGroup(
-            mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 238, Short.MAX_VALUE)
-        );
-
-        mainScrollPane.setViewportView(mainPanel);
+        mainScrollPane.setToolTipText("");
+        mainScrollPane.setOpaque(false);
+        mainScrollPane.setPreferredSize(new java.awt.Dimension(560, 240));
 
         jToolBar1.setFloatable(false);
         jToolBar1.setRollover(true);
@@ -207,14 +196,15 @@ public final class Simulation extends javax.swing.JPanel {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jToolBar1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(mainScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+            .addComponent(mainScrollPane, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 240, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -228,7 +218,6 @@ public final class Simulation extends javax.swing.JPanel {
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JPanel mainPanel;
     private javax.swing.JScrollPane mainScrollPane;
     // End of variables declaration//GEN-END:variables
 }

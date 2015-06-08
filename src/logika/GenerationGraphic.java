@@ -18,7 +18,6 @@ import javax.swing.JTextArea;
  */
 public class GenerationGraphic extends javax.swing.JPanel{
 
-    private Specimen bestSpecimen;
     /**
      * Creates new form GenerationGraphRepresentation
      * @param _generationNo (int) generation number
@@ -26,8 +25,7 @@ public class GenerationGraphic extends javax.swing.JPanel{
      * @param _bestSpecimen (Specimen) Instance of the best specimen
      */
     public GenerationGraphic(int _generationNo, int _numberOfSpecimens, Specimen _bestSpecimen) {
-        bestSpecimen = _bestSpecimen;
-        Double _bestValue = bestSpecimen.value;
+        Double _bestValue = _bestSpecimen.value;
         
         initComponents();
         
@@ -36,32 +34,32 @@ public class GenerationGraphic extends javax.swing.JPanel{
         
         String _bestValueStr = Double.toString(_bestValue);
         
-        if  (
-                _bestValueStr.indexOf('E')!=-1
-            ){
-            _bestValueStr = Double.toString(Math.floor(Double.parseDouble(_bestValueStr.split("E")[0]) * 10000000) / 10000000) + "E" + _bestValueStr.split("E")[1];
-        } else
+        if(_bestValueStr.indexOf('E')!=-1)
+            _bestValueStr = Double.toString(Math.floor(Double.parseDouble(_bestValueStr.split("E")[0]) * 100000000) / 100000000) + "E" + _bestValueStr.split("E")[1];
+        else
             _bestValueStr = Double.toString(Math.floor(_bestValue * 1000000000) / 1000000000);
         
         bestValue.setText(_bestValueStr);
+        
+        argumentsTextArea.setText(_bestSpecimen.printArguments());
         
         setSize(160, 220);
     }
     
     public void showArguments(){
-        //TODO:
-        JDialog argumentsModal = new JDialog();
-        JLabel title = new JLabel("Function arguments", JLabel.CENTER);
-        JButton closeButton = new JButton("Back");
-//       JTextArea bestArguments = new JTextArea(bestSpecimen.print());
+        removeAll();
 
-        argumentsModal.setPreferredSize(new java.awt.Dimension(400, 150));
+        add(argumentPanel);
         
-        argumentsModal.getContentPane().add(title);
-//        argumentsModal.getContentPane().add(bestArguments);
-        argumentsModal.getContentPane().add(closeButton, BorderLayout.PAGE_END);
+        revalidate();
+        repaint();
+    }
+    
+    public void showMain(){
+        removeAll();
+
+        add(mainPanel);
         
-        add(argumentsModal);
         revalidate();
         repaint();
     }
@@ -84,13 +82,18 @@ public class GenerationGraphic extends javax.swing.JPanel{
         bestValue = new javax.swing.JLabel();
         bestValueLabel = new javax.swing.JLabel();
         argumentPanel = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        title = new javax.swing.JLabel();
+        textWrapper = new javax.swing.JScrollPane();
+        argumentsTextArea = new javax.swing.JTextArea();
+        jButton2 = new javax.swing.JButton();
 
         setToolTipText("");
         setMaximumSize(new java.awt.Dimension(120, 160));
         setMinimumSize(new java.awt.Dimension(120, 160));
         setPreferredSize(new java.awt.Dimension(120, 160));
         setLayout(new java.awt.CardLayout());
+
+        mainPanel.setToolTipText("Generation details");
 
         mainlLabel.setFont(new java.awt.Font("Open Sans Light", 1, 14)); // NOI18N
         mainlLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -135,69 +138,94 @@ public class GenerationGraphic extends javax.swing.JPanel{
         mainPanel.setLayout(mainPanelLayout);
         mainPanelLayout.setHorizontalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(generationNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(mainPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(generationNumber, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
-                        .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                    .addComponent(noOfSpecimensLabel)
-                                    .addGap(2, 2, 2)
-                                    .addComponent(noOfSpecimens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addGroup(mainPanelLayout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(bestValueLabel)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(bestValue, javax.swing.GroupLayout.DEFAULT_SIZE, 87, Short.MAX_VALUE)))
-                            .addComponent(mainlLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(noOfSpecimensLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(noOfSpecimens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(mainPanelLayout.createSequentialGroup()
+                        .addComponent(bestValueLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(bestValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addComponent(mainlLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(30, 30, 30)
+                .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 97, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
         );
         mainPanelLayout.setVerticalGroup(
             mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mainPanelLayout.createSequentialGroup()
-                .addGap(6, 6, 6)
+                .addContainerGap()
                 .addComponent(mainlLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(generationNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(noOfSpecimensLabel)
-                    .addComponent(noOfSpecimens, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(noOfSpecimens, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(bestValueLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(bestValue, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                    .addComponent(bestValue, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(mainPanel, "card3");
 
-        jLabel1.setFont(new java.awt.Font("Open Sans Light", 1, 14)); // NOI18N
-        jLabel1.setText("Best arguments");
+        argumentPanel.setToolTipText("Generation details");
+
+        title.setFont(new java.awt.Font("Open Sans Light", 1, 14)); // NOI18N
+        title.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title.setText("Best arguments");
+
+        textWrapper.setBorder(null);
+
+        argumentsTextArea.setEditable(false);
+        argumentsTextArea.setBackground(new java.awt.Color(240, 240, 240));
+        argumentsTextArea.setColumns(11);
+        argumentsTextArea.setFont(new java.awt.Font("Open Sans Condensed Light", 1, 12)); // NOI18N
+        argumentsTextArea.setRows(8);
+        argumentsTextArea.setText("X");
+        argumentsTextArea.setToolTipText("Best arguments");
+        argumentsTextArea.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 5, 0, 5));
+        textWrapper.setViewportView(argumentsTextArea);
+
+        jButton2.setText("Back");
+        jButton2.setToolTipText("Go back to the generation details");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout argumentPanelLayout = new javax.swing.GroupLayout(argumentPanel);
         argumentPanel.setLayout(argumentPanelLayout);
         argumentPanelLayout.setHorizontalGroup(
             argumentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, argumentPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addContainerGap())
+            .addComponent(title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(textWrapper, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(argumentPanelLayout.createSequentialGroup()
+                .addGap(41, 41, 41)
+                .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(40, Short.MAX_VALUE))
         );
         argumentPanelLayout.setVerticalGroup(
             argumentPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(argumentPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(129, Short.MAX_VALUE))
+                .addComponent(title)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(textWrapper, javax.swing.GroupLayout.PREFERRED_SIZE, 138, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2)
+                .addContainerGap())
         );
 
         add(argumentPanel, "card2");
@@ -207,17 +235,24 @@ public class GenerationGraphic extends javax.swing.JPanel{
         showArguments();
     }//GEN-LAST:event_jButton1ActionPerformed
 
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        showMain();
+    }//GEN-LAST:event_jButton2ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel argumentPanel;
+    private javax.swing.JTextArea argumentsTextArea;
     private javax.swing.JLabel bestValue;
     private javax.swing.JLabel bestValueLabel;
     private javax.swing.JLabel generationNumber;
     private javax.swing.JButton jButton1;
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JButton jButton2;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JLabel mainlLabel;
     private javax.swing.JLabel noOfSpecimens;
     private javax.swing.JLabel noOfSpecimensLabel;
+    private javax.swing.JScrollPane textWrapper;
+    private javax.swing.JLabel title;
     // End of variables declaration//GEN-END:variables
 }

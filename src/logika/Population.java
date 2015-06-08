@@ -3,8 +3,6 @@ package logika;
 import java.awt.Component;
 import java.util.Collections;
 import java.util.LinkedList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -52,10 +50,9 @@ public final class Population extends javax.swing.JPanel {
     }
 	
     public void nextGeneration(int noOfGeneration){
-         
         LinkedList<Specimen> newGeneration = new LinkedList<Specimen>();
         int numberOfSpecimens = specimens.size();
-        for(int i = 0; i < numberOfSpecimens; i++){
+        for(int i = 0; i < specimens.size(); i++){
             for(int j = 0; j<1/ probabilityOfSurvival; j++){
                 int secondParent = RandomNumbersGenerator.generateInteger(0, numberOfSpecimens - 1);
                 while(secondParent == i)
@@ -64,19 +61,16 @@ public final class Population extends javax.swing.JPanel {
                 newGeneration.add(child);
             }
         }
-        specimens.clear();
         specimens = newGeneration;
         assignValuesToSpecimens();
         sortSpecimens();
         clearPopulationOfWeakSpecimens();
+        GenerationGraphic generationGraphic = new GenerationGraphic(noOfGeneration, specimens.size(), getBestSpecimen());
 
-        GenerationGraphic generationGraphic;
-        generationGraphic = new GenerationGraphic(noOfGeneration, specimens.size(), getBestSpecimen());
-
-        setSize(noOfGeneration * (generationGraphic.getWidth() + 20), generationGraphic.getHeight());
+        setSize(noOfGeneration * (generationGraphic.getWidth() + 20), generationGraphic.getHeight() + 40);
 
         Component addedGeneration = add(generationGraphic);
-        addedGeneration.setLocation((noOfGeneration - 1) * (generationGraphic.getWidth() + 20), 0 );
+        addedGeneration.setLocation(noOfGeneration * 10 + (noOfGeneration - 1) * (generationGraphic.getWidth() + 10), 20 );
     }
 
     private void killNumberOfSpecimens(double numberToBeKilled) {
@@ -88,10 +82,9 @@ public final class Population extends javax.swing.JPanel {
         return specimens.getLast();
     }
 
-    private double clearPopulationOfWeakSpecimens() {
+    private void clearPopulationOfWeakSpecimens() {
         double numberOfSpecimensToBeKilled = specimens.size() * (1 - probabilityOfSurvival);
         killNumberOfSpecimens(numberOfSpecimensToBeKilled);
-        return numberOfSpecimensToBeKilled;
     }
 
     public void printListOfSpecimens(LinkedList<Specimen> list) {

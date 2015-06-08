@@ -48,22 +48,21 @@ public class Specimen implements Comparable<Specimen>{
         for(int i = 0; i < arguments.size(); ++i) {
             if (RandomNumbersGenerator.generateBoolean()) {
                 double argument = arguments.get(i);
-                if (RandomNumbersGenerator.generateBoolean()) {
+                if (RandomNumbersGenerator.generateBoolean())
                     arguments.set(i, (argument*(1+ mutationFactor)));
-                } else {
+                else
                     arguments.set(i, (argument*(1- mutationFactor)));
-                }
             }
         }
     }
 
     public boolean shouldMutate() {
-        int rzut = RandomNumbersGenerator.generateInteger(1, 100);
-        return (rzut <= probabilityOfMutation);
+        int randInt = RandomNumbersGenerator.generateInteger(1, 100);
+        return (randInt <= probabilityOfMutation);
     }
 
     public Specimen crossover(Specimen specimen) {
-        LinkedList<Double> argumentyDziecka = new LinkedList<Double>();
+        LinkedList<Double> childArguments = new LinkedList<Double>();
         for (int i = 0; i < arguments.size(); ++i){
         	String childGenome;
         	String XGenome = Long.toBinaryString(Double.doubleToRawLongBits(this.arguments.get(i)));
@@ -74,22 +73,23 @@ public class Specimen implements Comparable<Specimen>{
                     childGenome = "";
                     for(int j = 0; j < shorterGenome; j++)
                         childGenome += (RandomNumbersGenerator.generateBoolean())?XGenome.charAt(j):YGenome.charAt(j);
+                    
 	    	    if(childGenome.length() == 64 && childGenome.charAt(0) == '1') {
 	                String negBinStr = childGenome.substring(1);
 	                childArg = -1 * Double.longBitsToDouble(Long.parseLong(negBinStr, 2));
-		        }else
-                            childArg = Double.longBitsToDouble(Long.parseLong(childGenome, 2));
+		    }else
+                        childArg = Double.longBitsToDouble(Long.parseLong(childGenome, 2));
         	}while(
                     Double.toString(childArg).indexOf('E')!=-1
                     &&
                     Math.abs(Integer.parseInt(Double.toString(childArg).split("E")[1])) > 128
         	);
-        	argumentyDziecka.add(childArg);
+        	childArguments.add(childArg);
         }
-        Specimen dziecko = new Specimen(argumentyDziecka);
-        if (dziecko.shouldMutate())
-            dziecko.mutate();
-        return dziecko;
+        Specimen child = new Specimen(childArguments);
+        if (child.shouldMutate())
+            child.mutate();
+        return child;
     }
 
     public int compareTo(Specimen o) {
@@ -103,20 +103,25 @@ public class Specimen implements Comparable<Specimen>{
             return -1;
     }
 
-    public void print() {
-        //String result = new String();
+    public void print() {;
         System.out.print("value: " + value + ", arguments: ");
-       // char tmpLetter = 'A';
         for (Double argument : arguments) {
-           // result += tmpLetter + " = " + argument + "\n";
             System.out.print(argument);
-            if (!arguments.getLast().equals(argument)) {
+            if (!arguments.getLast().equals(argument))
                 System.out.print(", ");
-            } else {
+            else
                 System.out.print(".");
-            }
         }
         System.out.println();
-        //return result;
     }
+    
+    public String printArguments(){
+        String result = new String();
+        char tmpLetter = 'A';
+        for (Double argument : arguments){
+            result += "\n" + tmpLetter + " = " + argument ;
+            tmpLetter++;
+        }
+        return result.substring(1);
+    };
 }

@@ -1,5 +1,7 @@
 package logika;
 
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowListener;
 import javax.swing.JOptionPane;
 
 /**
@@ -12,6 +14,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
      */
     public static final int         STATE_MENU = 0;
     public static final int         STATE_SIMULATION = 1;
+    public static final int         STATE_AUTHORS = 2;
     
     private javax.swing.JPanel simulationPane;
     
@@ -20,11 +23,28 @@ public class ApplicationWindow extends javax.swing.JFrame {
      */
     public ApplicationWindow() {
         initComponents();
+        setResizable(false);
+        addExitListener();
     }
     
     public ApplicationWindow(int stateId) {
         initComponents();
+        setResizable(false);
+        addExitListener();
         moveToState(stateId);
+    }
+    
+    private void addExitListener(){
+        
+        setDefaultCloseOperation(javax.swing.JFrame.DO_NOTHING_ON_CLOSE);
+        WindowListener exitListener = new WindowAdapter() {
+
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+                closeApplication();
+            }
+        };
+        addWindowListener(exitListener);
     }
 
     /**
@@ -36,84 +56,62 @@ public class ApplicationWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        saveLoadToolBar = new javax.swing.JToolBar();
-        saveToolBarButton = new javax.swing.JButton();
-        loadToolBarButton = new javax.swing.JButton();
         simulationToolbar = new javax.swing.JToolBar();
+        jButton1 = new javax.swing.JButton();
         programUtilitiesToolBar = new javax.swing.JToolBar();
-        aboutToolBarButton = new javax.swing.JButton();
-        documentationToolBarButton = new javax.swing.JButton();
+        authorsToolBarButton = new javax.swing.JButton();
         exitToolBarButton = new javax.swing.JButton();
         mainPanel = new javax.swing.JPanel();
         mainMenuPane = new javax.swing.JPanel();
         title = new javax.swing.JLabel();
         subtitle = new javax.swing.JLabel();
         newSimulationButton = new javax.swing.JButton();
-        loadSimulationButton = new javax.swing.JButton();
-        aboutButton = new javax.swing.JButton();
+        authorsButton = new javax.swing.JButton();
         exitButton = new javax.swing.JButton();
+        authorsPane = new javax.swing.JPanel();
+        title1 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newSimulationMenuButton = new javax.swing.JMenuItem();
-        openSimulationMenuButton = new javax.swing.JMenuItem();
-        saveSimulationMenuButton = new javax.swing.JMenuItem();
         exitMenuButton = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
-        documentationMenuButton = new javax.swing.JMenuItem();
         authorsMenuButton = new javax.swing.JMenuItem();
-        aboutMenuButton = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setLocationByPlatform(true);
         setMinimumSize(new java.awt.Dimension(600, 350));
-        setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(600, 350));
-
-        saveLoadToolBar.setFloatable(false);
-        saveLoadToolBar.setRollover(true);
-
-        saveToolBarButton.setText("Save");
-        saveToolBarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        saveToolBarButton.setEnabled(false);
-        saveToolBarButton.setFocusable(false);
-        saveToolBarButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        saveToolBarButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        saveToolBarButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveToolBarButtonActionPerformed(evt);
-            }
-        });
-        saveLoadToolBar.add(saveToolBarButton);
-
-        loadToolBarButton.setText("Load");
-        loadToolBarButton.setFocusable(false);
-        loadToolBarButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        loadToolBarButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        saveLoadToolBar.add(loadToolBarButton);
 
         simulationToolbar.setFloatable(false);
         simulationToolbar.setRollover(true);
 
+        jButton1.setText("Main menu");
+        jButton1.setFocusable(false);
+        jButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        jButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        simulationToolbar.add(jButton1);
+
         programUtilitiesToolBar.setFloatable(false);
         programUtilitiesToolBar.setRollover(true);
 
-        aboutToolBarButton.setText("About");
-        aboutToolBarButton.setFocusable(false);
-        aboutToolBarButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        aboutToolBarButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        aboutToolBarButton.addActionListener(new java.awt.event.ActionListener() {
+        authorsToolBarButton.setText("Authors");
+        authorsToolBarButton.setFocusable(false);
+        authorsToolBarButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        authorsToolBarButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        authorsToolBarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                aboutToolBarButtonActionPerformed(evt);
+                authorsToolBarButtonActionPerformed(evt);
             }
         });
-        programUtilitiesToolBar.add(aboutToolBarButton);
-
-        documentationToolBarButton.setText("Help");
-        documentationToolBarButton.setFocusable(false);
-        documentationToolBarButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        documentationToolBarButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        programUtilitiesToolBar.add(documentationToolBarButton);
+        programUtilitiesToolBar.add(authorsToolBarButton);
 
         exitToolBarButton.setText("Exit");
         exitToolBarButton.setFocusable(false);
@@ -147,9 +145,12 @@ public class ApplicationWindow extends javax.swing.JFrame {
             }
         });
 
-        loadSimulationButton.setText("Load simulation");
-
-        aboutButton.setText("About");
+        authorsButton.setText("Authors");
+        authorsButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                authorsButtonActionPerformed(evt);
+            }
+        });
 
         exitButton.setText("Exit");
         exitButton.addActionListener(new java.awt.event.ActionListener() {
@@ -165,9 +166,8 @@ public class ApplicationWindow extends javax.swing.JFrame {
             .addGroup(mainMenuPaneLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(mainMenuPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(loadSimulationButton, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
-                    .addComponent(newSimulationButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(aboutButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(newSimulationButton, javax.swing.GroupLayout.DEFAULT_SIZE, 200, Short.MAX_VALUE)
+                    .addComponent(authorsButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(exitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, mainMenuPaneLayout.createSequentialGroup()
@@ -188,16 +188,60 @@ public class ApplicationWindow extends javax.swing.JFrame {
                         .addComponent(subtitle)
                         .addGap(18, 18, 18)))
                 .addComponent(newSimulationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(loadSimulationButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(aboutButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
+                .addComponent(authorsButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         mainPanel.add(mainMenuPane, "card2");
+
+        authorsPane.setPreferredSize(new java.awt.Dimension(580, 300));
+
+        title1.setFont(new java.awt.Font("Open Sans Semibold", 0, 40)); // NOI18N
+        title1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        title1.setText("Authors");
+
+        jLabel1.setFont(new java.awt.Font("Open Sans Light", 1, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("Beata Giełbaga");
+
+        jLabel2.setFont(new java.awt.Font("Open Sans Light", 1, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("Kamil Dawidów");
+
+        jLabel3.setFont(new java.awt.Font("Open Sans Light", 1, 24)); // NOI18N
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Jakub Freisler");
+
+        javax.swing.GroupLayout authorsPaneLayout = new javax.swing.GroupLayout(authorsPane);
+        authorsPane.setLayout(authorsPaneLayout);
+        authorsPaneLayout.setHorizontalGroup(
+            authorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(authorsPaneLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(authorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(title1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
+                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE))
+                .addContainerGap())
+        );
+        authorsPaneLayout.setVerticalGroup(
+            authorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(authorsPaneLayout.createSequentialGroup()
+                .addComponent(title1)
+                .addGap(59, 59, 59)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel3)
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+
+        mainPanel.add(authorsPane, "card2");
 
         fileMenu.setText("File");
 
@@ -215,25 +259,6 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
         fileMenu.add(newSimulationMenuButton);
 
-        openSimulationMenuButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
-        openSimulationMenuButton.setText("Open simulation...");
-        openSimulationMenuButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openSimulationMenuButtonActionPerformed(evt);
-            }
-        });
-        fileMenu.add(openSimulationMenuButton);
-
-        saveSimulationMenuButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
-        saveSimulationMenuButton.setText("Save simulation...");
-        saveSimulationMenuButton.setEnabled(false);
-        saveSimulationMenuButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveSimulationMenuButtonActionPerformed(evt);
-            }
-        });
-        fileMenu.add(saveSimulationMenuButton);
-
         exitMenuButton.setText("Exit");
         exitMenuButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -246,10 +271,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         helpMenu.setText("Help");
 
-        documentationMenuButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_D, java.awt.event.InputEvent.CTRL_MASK));
-        documentationMenuButton.setText("Documentation");
-        helpMenu.add(documentationMenuButton);
-
+        authorsMenuButton.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_A, java.awt.event.InputEvent.CTRL_MASK));
         authorsMenuButton.setText("Authors");
         authorsMenuButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -257,9 +279,6 @@ public class ApplicationWindow extends javax.swing.JFrame {
             }
         });
         helpMenu.add(authorsMenuButton);
-
-        aboutMenuButton.setText("About");
-        helpMenu.add(aboutMenuButton);
 
         mainMenuBar.add(helpMenu);
 
@@ -274,10 +293,8 @@ public class ApplicationWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(saveLoadToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(simulationToolbar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(simulationToolbar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(programUtilitiesToolBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
@@ -285,36 +302,27 @@ public class ApplicationWindow extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(saveLoadToolBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(simulationToolbar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(programUtilitiesToolBar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
+                .addComponent(mainPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void saveSimulationMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveSimulationMenuButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveSimulationMenuButtonActionPerformed
-
     private void newSimulationMenuButtonKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_newSimulationMenuButtonKeyPressed
-        // TODO add your handling code here:
+        newSimulation();
     }//GEN-LAST:event_newSimulationMenuButtonKeyPressed
 
-    private void openSimulationMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openSimulationMenuButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_openSimulationMenuButtonActionPerformed
-
     private void authorsMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorsMenuButtonActionPerformed
-        // TODO add your handling code here:
+        moveToState(STATE_AUTHORS);
     }//GEN-LAST:event_authorsMenuButtonActionPerformed
 
-    private void aboutToolBarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutToolBarButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_aboutToolBarButtonActionPerformed
+    private void authorsToolBarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorsToolBarButtonActionPerformed
+       moveToState(STATE_AUTHORS);
+    }//GEN-LAST:event_authorsToolBarButtonActionPerformed
     
    /*
     * Moves to the new simulation view
@@ -327,10 +335,6 @@ public class ApplicationWindow extends javax.swing.JFrame {
         newSimulation();
     }//GEN-LAST:event_newSimulationMenuButtonActionPerformed
 
-    private void saveToolBarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveToolBarButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_saveToolBarButtonActionPerformed
-
     private void exitMenuButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitMenuButtonActionPerformed
         closeApplication();
     }//GEN-LAST:event_exitMenuButtonActionPerformed
@@ -342,6 +346,14 @@ public class ApplicationWindow extends javax.swing.JFrame {
     private void exitButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exitButtonActionPerformed
         closeApplication();
     }//GEN-LAST:event_exitButtonActionPerformed
+
+    private void authorsButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_authorsButtonActionPerformed
+        moveToState(STATE_AUTHORS);
+    }//GEN-LAST:event_authorsButtonActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        moveToState(STATE_MENU);
+    }//GEN-LAST:event_jButton1ActionPerformed
     
     /**
      * closes application
@@ -369,11 +381,16 @@ public class ApplicationWindow extends javax.swing.JFrame {
                 case STATE_SIMULATION:
                     moveToSimulation();
                     break;
+                case STATE_AUTHORS:
+                    moveToAuthors();
+                    break;
                 case STATE_MENU:
                 default:
                     moveToMenu();
                     break;    
             }
+            mainPanel.revalidate();
+            mainPanel.repaint();
         }
         
         /**
@@ -381,12 +398,8 @@ public class ApplicationWindow extends javax.swing.JFrame {
          */
         private void moveToMenu(){
             mainPanel.removeAll();
-            mainPanel.repaint();
-            mainPanel.revalidate();
 
             mainPanel.add(mainMenuPane);
-            mainPanel.repaint();
-            mainPanel.revalidate();
         }
         
         /**
@@ -394,12 +407,17 @@ public class ApplicationWindow extends javax.swing.JFrame {
          */
         private void moveToSimulation(){
             mainPanel.removeAll();
-            mainPanel.repaint();
-            mainPanel.revalidate();
 
             mainPanel.add(simulationPane);
-            mainPanel.repaint();
-            mainPanel.revalidate();
+        }
+        
+        /**
+         * moves to authors screen
+         */
+        private void moveToAuthors(){
+            mainPanel.removeAll();
+
+            mainPanel.add(authorsPane);
         }
 
     
@@ -472,31 +490,28 @@ public class ApplicationWindow extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton aboutButton;
-    private javax.swing.JMenuItem aboutMenuButton;
-    private javax.swing.JButton aboutToolBarButton;
+    private javax.swing.JButton authorsButton;
     private javax.swing.JMenuItem authorsMenuButton;
-    private javax.swing.JMenuItem documentationMenuButton;
-    private javax.swing.JButton documentationToolBarButton;
+    private javax.swing.JPanel authorsPane;
+    private javax.swing.JButton authorsToolBarButton;
     private javax.swing.JButton exitButton;
     private javax.swing.JMenuItem exitMenuButton;
     private javax.swing.JButton exitToolBarButton;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JMenu helpMenu;
-    private javax.swing.JButton loadSimulationButton;
-    private javax.swing.JButton loadToolBarButton;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar mainMenuBar;
     private javax.swing.JPanel mainMenuPane;
     private javax.swing.JPanel mainPanel;
     private javax.swing.JButton newSimulationButton;
     private javax.swing.JMenuItem newSimulationMenuButton;
-    private javax.swing.JMenuItem openSimulationMenuButton;
     private javax.swing.JToolBar programUtilitiesToolBar;
-    private javax.swing.JToolBar saveLoadToolBar;
-    private javax.swing.JMenuItem saveSimulationMenuButton;
-    private javax.swing.JButton saveToolBarButton;
     private javax.swing.JToolBar simulationToolbar;
     private javax.swing.JLabel subtitle;
     private javax.swing.JLabel title;
+    private javax.swing.JLabel title1;
     // End of variables declaration//GEN-END:variables
 }

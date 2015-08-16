@@ -3,6 +3,12 @@ package logika;
 import java.awt.Dimension;
 import java.awt.Rectangle;
 import java.util.LinkedList;
+import java.util.Arrays;
+import static java.util.regex.Pattern.CASE_INSENSITIVE;
+import net.objecthunter.exp4j.*;
+ import java.util.regex.Matcher;
+ import java.util.regex.Pattern;
+
 
 /**
  *
@@ -15,10 +21,32 @@ public final class Simulation extends javax.swing.JPanel {
     double epsilon;
     int numberOfGenerations;
     Population population;
-    FunctionOfSeveralVariables fncwz;
+    MathFunction fnc;
     
     private javax.swing.JTable argumentsTable;
     private javax.swing.table.DefaultTableModel argumentsTableModel;
+    
+    private LinkedList<String> findEveryVariable(String func){
+        LinkedList<String> allMatches = new LinkedList<String>();
+        Matcher m = Pattern
+                        .compile("[a-z]+", CASE_INSENSITIVE)
+                        .matcher(func);
+        
+        LinkedList<String> builtInFunctions = new LinkedList<String>(Arrays.asList(
+            "e", "pi", "abs", "acos", "asin", "atan",
+                "cbrt", "ceil", "cos", "cosh", "exp",
+                "floor", "log", "log2", "log10", "sin",
+                "sinh", "sqrt", "tan", "tanh"
+        ));
+        
+        while(m.find()){
+            String fVar = m.group();
+            if(builtInFunctions.indexOf(fVar) == -1 && allMatches.indexOf(fVar) == -1)
+                allMatches.add(fVar);
+        }
+        
+        return allMatches;
+    }
     
     /**
      * Creates new form Simulation
@@ -27,57 +55,19 @@ public final class Simulation extends javax.swing.JPanel {
          
         initComponents();
         
-        argumentsTable = new javax.swing.JTable();
-
-        argumentsTable.setFont(new java.awt.Font("Open Sans", 0, 13)); // NOI18N
-        argumentsTableModel = new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {0, 120, 99.20, 100.3},
-                {1, -47.29, -103.52, 33.283},
-                {2, null, null, -173.44},
-                {3, null, null, 83.2}
-            },
-            new String [] {
-                "Power", "A", "B", "C"
-            }
-        ) {
-            
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                if(columnIndex == 0)
-                    return false;
-                return true;
-            }
-            
-            @Override
-            public Class getColumnClass(int columnIndex) {
-                return java.lang.Double.class;
-            }
-        };
-        argumentsTable.setModel(argumentsTableModel);
-        argumentsTable.setToolTipText("Arguments table");
-        argumentsTable.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
-        argumentsTable.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        argumentsTable.setMaximumSize(new java.awt.Dimension(99999, 99999));
-        argumentsTable.setRowSelectionAllowed(false);
-        argumentsTable.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
-        argumentsTable.getTableHeader().setResizingAllowed(false);
-        argumentsTable.getTableHeader().setReorderingAllowed(false);
-        argumentsTable.getColumnModel().getColumn(0).setMinWidth(30);
-        argumentsTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-        argumentsScrollPane.setViewportView(argumentsTable);
     }
     
     /**
      * Creates new form Simulation
      */
-    public Simulation(int _specimens, double _min, double _max, double _epsilon, int _numberOfGenerations, FunctionOfSeveralVariables _fncwz) {
+    public Simulation(int _specimens, double _min, double _max, double _epsilon, int _numberOfGenerations, MathFunction _fnc) {
         specimens = _specimens;
         min = _min;
         max = _max;
         epsilon = _epsilon;
         numberOfGenerations = _numberOfGenerations;
         
-        fncwz = _fncwz;
+        fnc = _fnc;
 
         initComponents();
 
@@ -87,7 +77,7 @@ public final class Simulation extends javax.swing.JPanel {
      * Start simulation
      */
     public void start(){
-        population = new Population(fncwz, specimens, min, max); 
+        population = new Population(fnc, specimens, min, max); 
         mainScrollPane.setViewportView(population);
         
         Specimen foundSpecimen = findRoot();
@@ -103,7 +93,7 @@ public final class Simulation extends javax.swing.JPanel {
     }
 
     
-    public FunctionOfSeveralVariables getFunctionFromUser() {
+    /*public MathFunction getFunctionFromUser() {
         /*LinkedList<LinkedList<Double>> function = new LinkedList<LinkedList<Double>>();
         System.out.print("\nPodaj ilosc zmiennych funkcji: ");
         numberOfArguments = in.nextInt();
@@ -117,28 +107,28 @@ public final class Simulation extends javax.swing.JPanel {
             }
             function.add(functionFactors);
         }
-        return new FunctionOfSeveralVariables(function);*/
+        return new MathFunction(function);*/
         
-        LinkedList<Double> x = new LinkedList<Double>();
+        /*LinkedList<Double> x = new LinkedList<Double>();
         LinkedList<Double> y = new LinkedList<Double>();
         LinkedList<Double> z = new LinkedList<Double>();
 
         x.add(new Double(-59));
         x.add(new Double(120));
-        x.add(new Double(-47.29));
-        y.add(new Double(99.20));
-        y.add(new Double(-103.52));
-        z.add(new Double(100.3));
-        z.add(new Double(33.283));
-        z.add(new Double(-173.44));
-        z.add(new Double(83.2));
+        x.add(-47.29);
+        y.add(99.20);
+        y.add(-103.52);
+        z.add(100.3);
+        z.add(33.283);
+        z.add(-173.44);
+        z.add(83.2);
 
         LinkedList<LinkedList<Double>> fnc = new LinkedList<LinkedList<Double>>();
         fnc.add(x);
         fnc.add(y);
         fnc.add(z);
-        return new FunctionOfSeveralVariables(fnc);
-    }
+        return new MathFunction(fnc);
+    }*/
     
     public void setArguments(){
         specimens = Integer.parseInt(specimensArg.getText().replaceAll(",", "."));
@@ -146,7 +136,9 @@ public final class Simulation extends javax.swing.JPanel {
         max = Integer.parseInt(maxValue.getText().replaceAll(",", "."));
         epsilon = Double.parseDouble(precisionArg.getText().replaceAll(",", "."));
         numberOfGenerations = Integer.parseInt(generations.getText().replaceAll(",", "."));
-        
+        String userFunction = mathFunction.getText();
+        ExpressionBuilder rawExpression = new ExpressionBuilder(userFunction);
+        /*
         boolean flag;
         LinkedList<LinkedList<Double>> fnc = new LinkedList<LinkedList<Double>>();
         for(int i = 1; i < argumentsTable.getColumnCount(); i++){
@@ -162,9 +154,14 @@ public final class Simulation extends javax.swing.JPanel {
             }
             if(flag)
                 fnc.add(tmpArg);
-        }
-            
-        fncwz = new FunctionOfSeveralVariables(fnc);
+        }*/
+        LinkedList<String> variableNames = findEveryVariable(userFunction);
+        
+        for(String var : variableNames)
+            rawExpression.variable(var);
+        
+        
+        fnc = new MathFunction(rawExpression.build(), variableNames);
     }
 
     public Specimen findRoot() {
@@ -206,9 +203,6 @@ public final class Simulation extends javax.swing.JPanel {
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        argumentsScrollPane = new javax.swing.JScrollPane();
         jToggleButton1 = new javax.swing.JToggleButton();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
@@ -217,14 +211,19 @@ public final class Simulation extends javax.swing.JPanel {
         precisionArg = new javax.swing.JFormattedTextField();
         specimensArg = new javax.swing.JFormattedTextField();
         generations = new javax.swing.JFormattedTextField();
+        mathFunction = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
         jToolBar1 = new javax.swing.JToolBar();
 
-        setMinimumSize(new java.awt.Dimension(0, 287));
-        setPreferredSize(new java.awt.Dimension(580, 287));
+        setMinimumSize(new java.awt.Dimension(0, 320));
+        setPreferredSize(new java.awt.Dimension(580, 320));
 
+        mainScrollPane.setBorder(null);
         mainScrollPane.setToolTipText("");
+        mainScrollPane.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
+        mainScrollPane.setMinimumSize(new java.awt.Dimension(6, 260));
         mainScrollPane.setOpaque(false);
-        mainScrollPane.setPreferredSize(new java.awt.Dimension(560, 240));
+        mainScrollPane.setPreferredSize(new java.awt.Dimension(560, 260));
 
         jLabel1.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
         jLabel1.setText("Simulation settings");
@@ -240,22 +239,6 @@ public final class Simulation extends javax.swing.JPanel {
         jLabel4.setFont(new java.awt.Font("Open Sans", 0, 13)); // NOI18N
         jLabel4.setText("Result's precision:");
         jLabel4.setToolTipText("Maximum value of variable that we are looking for");
-
-        jButton2.setText("Add row");
-        jButton2.setToolTipText("Adds new row(max 8)");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
-
-        jButton3.setText("Add Column");
-        jButton3.setToolTipText("Adds new column (max 10)");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
 
         jToggleButton1.setText(">");
         jToggleButton1.setFocusable(false);
@@ -323,47 +306,59 @@ public final class Simulation extends javax.swing.JPanel {
             }
         });
 
+        mathFunction.setText("x^2 + 7 * x - 3 * sin(2 * x) - 3 * y^3 + cos(y / 2)");
+        mathFunction.setMargin(new java.awt.Insets(2, 10, 2, 10));
+        mathFunction.setMaximumSize(new java.awt.Dimension(510, 2147483647));
+        mathFunction.setMinimumSize(new java.awt.Dimension(510, 20));
+        mathFunction.setName(""); // NOI18N
+        mathFunction.setPreferredSize(new java.awt.Dimension(510, 20));
+        mathFunction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mathFunctionActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Open Sans", 1, 24)); // NOI18N
+        jLabel7.setText("Math function");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(31, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jLabel6))
-                                    .addGap(10, 10, 10)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(specimensArg)
-                                        .addComponent(generations))))
-                            .addGap(18, 18, 18)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel2)
-                                .addComponent(jLabel3)
-                                .addComponent(jLabel4))
-                            .addGap(24, 24, 24)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(precisionArg, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(maxValue, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(minValue, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGap(272, 272, 272)
-                            .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(argumentsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 519, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 111, Short.MAX_VALUE))
+                    .addComponent(jLabel7)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jLabel6))
+                                .addGap(10, 10, 10)
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(specimensArg)
+                                    .addComponent(generations))))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel4))
+                        .addGap(24, 24, 24)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(precisionArg, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(maxValue, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(minValue, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(mathFunction, javax.swing.GroupLayout.PREFERRED_SIZE, 517, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(0, 30, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel2)
@@ -380,15 +375,13 @@ public final class Simulation extends javax.swing.JPanel {
                     .addComponent(jLabel4)
                     .addComponent(precisionArg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(generations, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(33, 33, 33)
+                .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(argumentsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(188, Short.MAX_VALUE))
+                .addComponent(mathFunction, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(32, 32, 32)
+                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
         mainScrollPane.setViewportView(jPanel1);
@@ -409,69 +402,57 @@ public final class Simulation extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 286, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void generationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generationsActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_generationsActionPerformed
+
+    private void specimensArgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specimensArgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_specimensArgActionPerformed
+
+    private void precisionArgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionArgActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_precisionArgActionPerformed
+
+    private void maxValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_maxValueActionPerformed
+
+    private void minValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minValueActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_minValueActionPerformed
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
         setArguments();
         start();
     }//GEN-LAST:event_jToggleButton1ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        if(argumentsTable.getColumnCount() < 11){
-            char tmpLetter = 'A';
-            tmpLetter += argumentsTable.getColumnCount() - 1;
-            argumentsTableModel.addColumn(tmpLetter);
-            argumentsTable.getColumnModel().getColumn(0).setMinWidth(30);
-            argumentsTable.getColumnModel().getColumn(0).setPreferredWidth(50);
-        }
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if(argumentsTable.getRowCount() < 8)
-            argumentsTableModel.addRow(new Object[] { argumentsTable.getRowCount() });
-    }//GEN-LAST:event_jButton2ActionPerformed
-
-    private void minValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_minValueActionPerformed
+    private void mathFunctionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mathFunctionActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_minValueActionPerformed
-
-    private void maxValueActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_maxValueActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_maxValueActionPerformed
-
-    private void precisionArgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_precisionArgActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_precisionArgActionPerformed
-
-    private void specimensArgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_specimensArgActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_specimensArgActionPerformed
-
-    private void generationsActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_generationsActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_generationsActionPerformed
+    }//GEN-LAST:event_mathFunctionActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane argumentsScrollPane;
     private javax.swing.JFormattedTextField generations;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JScrollPane mainScrollPane;
+    private javax.swing.JTextField mathFunction;
     private javax.swing.JFormattedTextField maxValue;
     private javax.swing.JFormattedTextField minValue;
     private javax.swing.JFormattedTextField precisionArg;

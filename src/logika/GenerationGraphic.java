@@ -5,13 +5,6 @@
  */
 package logika;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JLabel;
-import javax.swing.JTextArea;
-
 /**
  *
  * @author Administrator

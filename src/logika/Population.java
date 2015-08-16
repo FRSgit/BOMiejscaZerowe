@@ -13,7 +13,7 @@ public final class Population extends javax.swing.JPanel {
     final double probabilityOfSurvival = 0.2;
 
     public LinkedList<Specimen> specimens = new LinkedList<Specimen>();
-    public FunctionOfSeveralVariables function;
+    public MathFunction function;
         
     /**
      * Creates new object & form Population
@@ -23,20 +23,20 @@ public final class Population extends javax.swing.JPanel {
      * @param max double - max limit of range in which we are looking for root value
      */
     
-    public Population(FunctionOfSeveralVariables function, int numberOfGeneratedSpecimens, double min, double max) {
+    public Population(MathFunction function, int numberOfGeneratedSpecimens, double min, double max) {
         this.function = function;
         generate(numberOfGeneratedSpecimens, min, max);
         initComponents();
     }
 
-    public Population(LinkedList<Specimen> specimens, FunctionOfSeveralVariables function) {
+    public Population(LinkedList<Specimen> specimens, MathFunction function) {
         this.function = function;
         this.specimens = specimens;
         initComponents();
     }
 	
     public void generate(int numberOfGeneratedSpecimens, double min, double max){
-        SpecimenGenerator generator = new SpecimenGenerator(numberOfGeneratedSpecimens, function.function.size(),min,max);
+        SpecimenGenerator generator = new SpecimenGenerator(numberOfGeneratedSpecimens, function.getNumberOfArguments(),min,max);
         specimens = generator.generuj();
     }
 

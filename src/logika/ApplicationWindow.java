@@ -73,6 +73,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        backButton = new javax.swing.JButton();
         mainMenuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         newSimulationMenuButton = new javax.swing.JMenuItem();
@@ -199,46 +200,58 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         authorsPane.setPreferredSize(new java.awt.Dimension(580, 300));
 
-        title1.setFont(new java.awt.Font("Open Sans Semibold", 0, 40)); // NOI18N
+        title1.setFont(new java.awt.Font("Open Sans Semibold", 0, 36)); // NOI18N
         title1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         title1.setText("Authors");
 
-        jLabel1.setFont(new java.awt.Font("Open Sans Light", 1, 24)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Open Sans Light", 1, 18)); // NOI18N
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("Beata Giełbaga");
 
-        jLabel2.setFont(new java.awt.Font("Open Sans Light", 1, 24)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Open Sans Light", 1, 18)); // NOI18N
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Kamil Dawidów");
 
-        jLabel3.setFont(new java.awt.Font("Open Sans Light", 1, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Open Sans Light", 1, 18)); // NOI18N
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("Jakub Freisler");
+
+        backButton.setText("Main Menu");
+        backButton.setAlignmentY(0.0F);
+        backButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        backButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                backButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout authorsPaneLayout = new javax.swing.GroupLayout(authorsPane);
         authorsPane.setLayout(authorsPaneLayout);
         authorsPaneLayout.setHorizontalGroup(
             authorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(authorsPaneLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(authorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(title1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE))
-                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, authorsPaneLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(195, 195, 195))
+            .addComponent(title1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
+            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 580, Short.MAX_VALUE)
         );
         authorsPaneLayout.setVerticalGroup(
             authorsPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(authorsPaneLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(title1)
-                .addGap(59, 59, 59)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel3)
-                .addContainerGap(65, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
+                .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         mainPanel.add(authorsPane, "card2");
@@ -354,6 +367,10 @@ public class ApplicationWindow extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         moveToState(STATE_MENU);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void backButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_backButtonActionPerformed
+        moveToState(STATE_MENU);
+    }//GEN-LAST:event_backButtonActionPerformed
     
     /**
      * closes application
@@ -494,6 +511,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
     private javax.swing.JMenuItem authorsMenuButton;
     private javax.swing.JPanel authorsPane;
     private javax.swing.JButton authorsToolBarButton;
+    private javax.swing.JButton backButton;
     private javax.swing.JButton exitButton;
     private javax.swing.JMenuItem exitMenuButton;
     private javax.swing.JButton exitToolBarButton;

@@ -9,6 +9,13 @@ import net.objecthunter.exp4j.*;
  import java.util.regex.Matcher;
  import java.util.regex.Pattern;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
+
 
 /**
  *
@@ -187,6 +194,41 @@ public final class Simulation extends javax.swing.JPanel {
         for (Specimen o : list)
             System.out.println(o.value);
     }
+    
+    
+    public void PieChart() {
+        XYSeries series = new XYSeries("Wykres postępu");
+        Specimen bestOfPopulation = new Specimen();
+        
+        for(int i = 1; i < numberOfGenerations; i++) {
+            population.nextGeneration(i);
+            bestOfPopulation = population.getBestSpecimen();
+            series.add(i, bestOfPopulation.value);
+            if(Math.abs(bestOfPopulation.value) < epsilon)
+                break;
+        }
+        
+        XYSeriesCollection dataset = new XYSeriesCollection();
+        dataset.addSeries(series);
+        
+        //tworzenie wykres XY
+        JFreeChart chart = ChartFactory.createXYLineChart(
+                "Wykres postępu",  //tytuł, mało kreatywny
+                "Populacja",       //oś x
+                "Wartość funkcji", //oś y
+                dataset,           //dane
+                PlotOrientation.VERTICAL,
+                false,             //legenda
+                true,
+                false
+        );
+        
+        //dodanie wykresu do okna
+        ChartFrame frame1 = new ChartFrame("wykres", chart);
+        frame1.setVisible(true);
+        frame1.setSize(600, 500);
+    }
+
 
     /**
      * This method is called from within the constructor to initialize the form.

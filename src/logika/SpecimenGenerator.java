@@ -9,12 +9,14 @@ import java.util.LinkedList;
 public class SpecimenGenerator {
     int numberOfSpecimens;
     int numberOfArguments;
+    LinkedList<String> namesOfArguments;
     double min;
     double max;
 
-    public SpecimenGenerator(int numberOfSpecimens, int numberOfArguments, double min, double max) {
+    public SpecimenGenerator(int numberOfSpecimens, int numberOfArguments, LinkedList<String> namesOfArguments, double min, double max) {
         this.numberOfSpecimens = numberOfSpecimens;
         this.numberOfArguments = numberOfArguments;
+        this.namesOfArguments = namesOfArguments;
         this.min = min;
         this.max = max;
     }
@@ -26,7 +28,7 @@ public class SpecimenGenerator {
             for (int j = 0; j < numberOfArguments; ++j) {
                 argumenty.add(RandomNumbersGenerator.generateDouble(min, max));
             }
-            specimensList.add(new Specimen(argumenty));
+            specimensList.add(new Specimen(argumenty, namesOfArguments));
         }
         return specimensList;
     }

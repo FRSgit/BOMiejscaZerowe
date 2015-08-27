@@ -30,8 +30,7 @@ public final class Simulation extends javax.swing.JPanel {
     Population population;
     MathFunction fnc;
     
-    private javax.swing.JTable argumentsTable;
-    private javax.swing.table.DefaultTableModel argumentsTableModel;
+    private LinkedList<String> variableNames;
     
     private LinkedList<String> findEveryVariable(String func){
         LinkedList<String> allMatches = new LinkedList<String>();
@@ -84,7 +83,7 @@ public final class Simulation extends javax.swing.JPanel {
      * Start simulation
      */
     public void start(){
-        population = new Population(fnc, specimens, min, max); 
+        population = new Population(fnc, specimens, variableNames, min, max); 
         mainScrollPane.setViewportView(population);
         
         Specimen foundSpecimen = findRoot();
@@ -162,7 +161,7 @@ public final class Simulation extends javax.swing.JPanel {
             if(flag)
                 fnc.add(tmpArg);
         }*/
-        LinkedList<String> variableNames = findEveryVariable(userFunction);
+        variableNames = findEveryVariable(userFunction);
         
         for(String var : variableNames)
             rawExpression.variable(var);

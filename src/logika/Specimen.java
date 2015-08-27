@@ -18,30 +18,37 @@ public class Specimen implements Comparable<Specimen>{
      * Wartość jaką function przyjmuje dla argumentów osobnika (ustawiana przez klasą Populacja)
      */
     public Double value;
+    
     /**
      * Szansa mutacji wyrażona w ilości procent
      */
     public int probabilityOfMutation;
+    
+    /**
+     * Nazwy zmiennych w odpowiedniej kolejności (wykorzystywane w metodzie print)
+     */
+    public LinkedList<String> namesOfArguments = new LinkedList<String>();
 
     private final Double standardMutationFactor = 0.2;
     private final int standardProbabilityOfMutation = 10;
 
     public Specimen() {
-        initialize(new LinkedList<Double>(), standardMutationFactor, standardProbabilityOfMutation);
+        initialize(new LinkedList<Double>(), standardMutationFactor, standardProbabilityOfMutation, namesOfArguments);
     }
 
-    public Specimen(LinkedList<Double> arguments) {
-        initialize(arguments, standardMutationFactor, standardProbabilityOfMutation);
+    public Specimen(LinkedList<Double> arguments, LinkedList<String> namesOfArguments) {
+        initialize(arguments, standardMutationFactor, standardProbabilityOfMutation, namesOfArguments);
     }
 
-    public Specimen(LinkedList<Double> arguments, Double mutationFactor, int probabilityOfMutation) {
-        initialize(arguments, mutationFactor, probabilityOfMutation);
+    public Specimen(LinkedList<Double> arguments, LinkedList<String> namesOfArguments, Double mutationFactor, int probabilityOfMutation) {
+        initialize(arguments, mutationFactor, probabilityOfMutation, namesOfArguments);
     }
 
-    private void initialize(LinkedList<Double> arguments, Double mutationFactor, int probabilityOfMutation) {
+    private void initialize(LinkedList<Double> arguments, Double mutationFactor, int probabilityOfMutation, LinkedList<String> namesOfArguments) {
         this.arguments = arguments;
         this.mutationFactor = mutationFactor;
         this.probabilityOfMutation = probabilityOfMutation;
+        this.namesOfArguments = namesOfArguments;
     }
 
     public void mutate() {
@@ -86,7 +93,7 @@ public class Specimen implements Comparable<Specimen>{
         	);
         	childArguments.add(childArg);
         }
-        Specimen child = new Specimen(childArguments);
+        Specimen child = new Specimen(childArguments, namesOfArguments);
         if (child.shouldMutate())
             child.mutate();
         return child;
@@ -117,11 +124,9 @@ public class Specimen implements Comparable<Specimen>{
     
     public String printArguments(){
         String result = new String();
-        char tmpLetter = 'A';
-        for (Double argument : arguments){
-            result += "\n" + tmpLetter + " = " + argument ;
-            tmpLetter++;
-        }
+        for(int i = 0; i < arguments.size(); i++)
+            result += "\n" + namesOfArguments.get(i) + " = " + arguments.get(i);
+        
         return result.substring(1);
     };
 }

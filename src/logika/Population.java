@@ -19,24 +19,25 @@ public final class Population extends javax.swing.JPanel {
      * Creates new object & form Population
      * @param function function of several variables which root values we're looking for
      * @param numberOfGeneratedSpecimens int - how many specimens should be created
+     * @param namesOfArguments string - names of missing arguments
      * @param min double - min limit of range in which we are looking for root value
      * @param max double - max limit of range in which we are looking for root value
      */
     
-    public Population(MathFunction function, int numberOfGeneratedSpecimens, double min, double max) {
+    public Population(MathFunction function, int numberOfGeneratedSpecimens, LinkedList<String> namesOfArguments, double min, double max) {
         this.function = function;
-        generate(numberOfGeneratedSpecimens, min, max);
+        generate(numberOfGeneratedSpecimens, namesOfArguments, min, max);
         initComponents();
     }
 
-    public Population(LinkedList<Specimen> specimens, MathFunction function) {
+    public Population(LinkedList<Specimen> specimens, MathFunction function, LinkedList<String> namesOfArguments) {
         this.function = function;
         this.specimens = specimens;
         initComponents();
     }
 	
-    public void generate(int numberOfGeneratedSpecimens, double min, double max){
-        SpecimenGenerator generator = new SpecimenGenerator(numberOfGeneratedSpecimens, function.getNumberOfArguments(),min,max);
+    public void generate(int numberOfGeneratedSpecimens, LinkedList<String> namesOfArguments, double min, double max){
+        SpecimenGenerator generator = new SpecimenGenerator(numberOfGeneratedSpecimens, function.getNumberOfArguments(), namesOfArguments,min,max);
         specimens = generator.generuj();
     }
 

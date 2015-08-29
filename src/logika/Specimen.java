@@ -91,6 +91,7 @@ public class Specimen implements Comparable<Specimen>{
                     &&
                     Math.abs(Integer.parseInt(Double.toString(childArg).split("E")[1])) > 128
         	);
+                
         	childArguments.add(childArg);
         }
         Specimen child = new Specimen(childArguments, namesOfArguments);

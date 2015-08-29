@@ -140,11 +140,15 @@ public final class Simulation extends javax.swing.JPanel {
     }*/
     
     public void setArguments(){
-        specimens = Integer.parseInt(specimensArg.getText().replaceAll(",", "."));
-        min = Integer.parseInt(minValue.getText().replaceAll(",", "."));
-        max = Integer.parseInt(maxValue.getText().replaceAll(",", "."));
-        epsilon = Double.parseDouble(precisionArg.getText().replaceAll(",", "."));
-        numberOfGenerations = Integer.parseInt(generations.getText().replaceAll(",", "."));
+        specimens = Integer.parseInt(specimensArg.getText().replaceAll("\\D", ""));
+        min = Integer.parseInt(minValue.getText().replaceAll("\\D", ""));
+        if(minValue.getText().charAt(0) == '-')
+            min *= -1;
+        max = Integer.parseInt(maxValue.getText().replaceAll("\\D", ""));
+        if(maxValue.getText().charAt(0) == '-')
+            max *= -1;
+        epsilon = Double.parseDouble(precisionArg.getText().replaceAll(",", ".").replaceAll("\\s", ""));
+        numberOfGenerations = Integer.parseInt(generations.getText().replaceAll("\\D", ""));
         String userFunction = mathFunction.getText();
         ExpressionBuilder rawExpression = new ExpressionBuilder(userFunction);
         /*

@@ -96,6 +96,8 @@ public final class Simulation extends javax.swing.JPanel {
         
         System.out.print("Znaleziony osobnik: ");
         foundSpecimen.print();
+      
+        PieChart();
     }
 
     

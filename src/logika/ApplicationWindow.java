@@ -377,7 +377,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
      */
     private void closeApplication(){
         int confirm = JOptionPane.showOptionDialog(this,
-                "Are You Sure to Close this Application?",
+                "Are you sure you want to close this application?",
                 "Exit Confirmation", JOptionPane.YES_NO_OPTION,
                 JOptionPane.QUESTION_MESSAGE, null, null, null);
         if(confirm == JOptionPane.YES_OPTION)

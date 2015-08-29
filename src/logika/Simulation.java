@@ -31,6 +31,7 @@ public final class Simulation extends javax.swing.JPanel {
     MathFunction fnc;
     
     private LinkedList<String> variableNames;
+    private final XYSeries series = new XYSeries("Wykres postępu");
     
     private LinkedList<String> findEveryVariable(String func){
         LinkedList<String> allMatches = new LinkedList<String>();
@@ -179,10 +180,12 @@ public final class Simulation extends javax.swing.JPanel {
             population.nextGeneration(i);
             System.out.print("Pokolenie no " + i + ", aktualny najlepszy osobnik: ");
             currentBestSpecimen = population.getBestSpecimen();
+            series.add(i, currentBestSpecimen.value);
             currentBestSpecimen.print();
             if (Math.abs(currentBestSpecimen.value) < epsilon)
                 break;
         }
+        
         return currentBestSpecimen;
     }
 
@@ -198,17 +201,6 @@ public final class Simulation extends javax.swing.JPanel {
     
     
     public void LineChart() {
-        XYSeries series = new XYSeries("Wykres postępu");
-        Specimen bestOfPopulation = new Specimen();
-        
-        for(int i = 1; i < numberOfGenerations; i++) {
-            population.nextGeneration(i);
-            bestOfPopulation = population.getBestSpecimen();
-            series.add(i, bestOfPopulation.value);
-            if(Math.abs(bestOfPopulation.value) < epsilon)
-                break;
-        }
-        
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
         

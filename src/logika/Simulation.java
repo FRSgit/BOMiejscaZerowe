@@ -97,7 +97,7 @@ public final class Simulation extends javax.swing.JPanel {
         System.out.print("Znaleziony osobnik: ");
         foundSpecimen.print();
       
-        PieChart();
+        LineChart();
     }
 
     
@@ -197,7 +197,7 @@ public final class Simulation extends javax.swing.JPanel {
     }
     
     
-    public void PieChart() {
+    public void LineChart() {
         XYSeries series = new XYSeries("Wykres postępu");
         Specimen bestOfPopulation = new Specimen();
         

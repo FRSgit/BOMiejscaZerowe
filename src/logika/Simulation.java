@@ -59,6 +59,14 @@ public final class Simulation extends javax.swing.JPanel {
      * Creates new form Simulation
      */
     public Simulation() {
+        
+        progressChartBtn = new javax.swing.JButton();
+        progressChartBtn.setText("Show a progress chart");
+        progressChartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                progressChartBtnActionPerformed(evt);
+            }
+        });
          
         initComponents();
         
@@ -75,6 +83,14 @@ public final class Simulation extends javax.swing.JPanel {
         numberOfGenerations = _numberOfGenerations;
         
         fnc = _fnc;
+        
+        progressChartBtn = new javax.swing.JButton();
+        progressChartBtn.setText("Show a progress chart");
+        progressChartBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                progressChartBtnActionPerformed(evt);
+            }
+        });
 
         initComponents();
 
@@ -84,8 +100,15 @@ public final class Simulation extends javax.swing.JPanel {
      * Start simulation
      */
     public void start(){
-        population = new Population(fnc, specimens, variableNames, min, max); 
+        population = new Population(fnc, specimens, variableNames, min, max);
+        
+        
+        add(progressChartBtn);
+        progressChartBtn.setBounds(0, 286, 1000, 1000);
+        progressChartBtn.setSize(590, 28);
+        
         mainScrollPane.setViewportView(population);
+
         
         Specimen foundSpecimen = findRoot();
         
@@ -96,9 +119,10 @@ public final class Simulation extends javax.swing.JPanel {
         population.scrollRectToVisible(rect);
         
         System.out.print("Znaleziony osobnik: ");
+        
+        
         foundSpecimen.print();
-      
-        LineChart();
+
     }
 
     
@@ -208,9 +232,10 @@ public final class Simulation extends javax.swing.JPanel {
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(series);
         
+        
         //tworzenie wykres XY
         JFreeChart chart = ChartFactory.createXYLineChart(
-                "Wykres postępu",  //tytuł, mało kreatywny
+                "Wykres postępu funkcji\n\r" + mathFunction.getText(),   //tytuł, mało kreatywny
                 "Populacja",       //oś x
                 "Wartość funkcji", //oś y
                 dataset,           //dane
@@ -418,9 +443,9 @@ public final class Simulation extends javax.swing.JPanel {
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(mathFunction, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(32, 32, 32)
+                .addGap(18, 18, 18)
                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(41, Short.MAX_VALUE))
+                .addContainerGap(55, Short.MAX_VALUE))
         );
 
         mainScrollPane.setViewportView(jPanel1);
@@ -441,8 +466,8 @@ public final class Simulation extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 309, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(mainScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 282, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(45, 45, 45)
                 .addComponent(jToolBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -476,8 +501,13 @@ public final class Simulation extends javax.swing.JPanel {
     private void mathFunctionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mathFunctionActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_mathFunctionActionPerformed
-
-
+    
+    private void progressChartBtnActionPerformed(java.awt.event.ActionEvent evt) {                                               
+        LineChart();
+    }
+    
+    
+    private javax.swing.JButton progressChartBtn;
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JFormattedTextField generations;
     private javax.swing.JLabel jLabel1;
